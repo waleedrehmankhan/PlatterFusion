@@ -13,6 +13,6 @@ namespace PlatterFusion.API.Data
         {
         }
 
-        public DbSet<Value> Values { get; set; }
+        public DbSet<Event> Events { get; set; }
     }
 }

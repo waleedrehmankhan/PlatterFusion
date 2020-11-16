@@ -1,8 +1,5 @@
 ﻿using PlatterFusion.API.Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using PlatterFusion.API.Persistence.Interfaces;
 
 namespace PlatterFusion.API.Persistence
 {
@@ -13,7 +10,10 @@ namespace PlatterFusion.API.Persistence
         public UnitOfWork(DataContext context)
         {
             _context = context;
+            Events = new EventRepository(_context);
         }
+
+        public IEventRepository Events { get; private set; }
 
         public int Complete()
         {
