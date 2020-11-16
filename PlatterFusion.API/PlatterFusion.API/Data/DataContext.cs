@@ -14,5 +14,6 @@ namespace PlatterFusion.API.Data
         }
 
         public DbSet<Event> Events { get; set; }
+        public DbSet<Product> Products { get; set; }
     }
 }

@@ -11,9 +11,11 @@ namespace PlatterFusion.API.Persistence
         {
             _context = context;
             Events = new EventRepository(_context);
+            Products = new ProductRepository(_context);
         }
 
         public IEventRepository Events { get; private set; }
+        public IProductRepository Products { get; private set; }
 
         public int Complete()
         {

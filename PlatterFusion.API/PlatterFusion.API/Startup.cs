@@ -12,6 +12,9 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using PlatterFusion.API.Data;
+using PlatterFusion.API.Persistence;
+using AutoMapper;
+using PlatterFusion.API.Helpers;
 
 namespace PlatterFusion.API
 {
@@ -27,7 +30,12 @@ namespace PlatterFusion.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<DataContext>(x => x.UseSqlServer(Configuration.GetConnectionString("PlatterFusionDatabase")));
+            services.AddAutoMapper(typeof(AutoMapperProfile));
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddDbContext<DataContext>(options =>
+                options.UseSqlServer(
+                   Configuration.GetConnectionString("PlatterFusionDatabase")).UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking));
+
             services.AddControllers();
         }
 

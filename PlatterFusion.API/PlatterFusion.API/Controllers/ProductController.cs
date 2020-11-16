@@ -10,22 +10,21 @@ using PlatterFusion.API.Dtos;
 using PlatterFusion.API.Helpers;
 using PlatterFusion.API.Model;
 using PlatterFusion.API.Persistence;
-using PlatterFusion.API.Persistence.Repositories.Event;
+using PlatterFusion.API.Persistence.Repositories.Product;
 
 namespace PlatterFusion.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class EventController : ControllerBase
+    public class ProductController : ControllerBase
     {
-
         #region Configuration
 
-        private readonly ILogger<EventController> _logger;
+        private readonly ILogger<ProductController> _logger;
         private IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public EventController(ILogger<EventController> logger, IUnitOfWork unitOfWork, IMapper mapper)
+        public ProductController(ILogger<ProductController> logger, IUnitOfWork unitOfWork, IMapper mapper)
         {
             _logger = logger;
             _unitOfWork = unitOfWork;
@@ -35,16 +34,16 @@ namespace PlatterFusion.API.Controllers
         #endregion
 
         [HttpPost("all")]
-        public async Task<ContentResult> GetAll(GetEventInput input)
+        public async Task<ContentResult> GetAll(GetProductInput input)
         {
             try
             {
                 ReturnMessage rm = new ReturnMessage(1, "Success");
-                var events = await Task.Run(() => _unitOfWork.Events.GetAsync(filter: e => input.Id != 0 ? (e.Id == input.Id) : true));
-                var eventsToReturn = _mapper.Map<IEnumerable<EventDto>>(events);
+                var products = await Task.Run(() => _unitOfWork.Products.GetAsync(filter: e => input.Id != 0 ? (e.Id == input.Id) : true));
+                var productsToReturn = _mapper.Map<IEnumerable<ProductDto>>(products);
 
-                return this.Content(rm.returnMessage(new PagedResultDto<EventDto>
-                    (eventsToReturn.AsQueryable(), input.pagenumber, input.pagesize)),
+                return this.Content(rm.returnMessage(new PagedResultDto<ProductDto>
+                    (productsToReturn.AsQueryable(), input.pagenumber, input.pagesize)),
                     "application/json");
 
             }
@@ -61,27 +60,27 @@ namespace PlatterFusion.API.Controllers
 
         [HttpPost("save")]
         [ValidateFilter]
-        public async Task<ContentResult> CreateOrUpdate(EventDto eventDto)
+        public async Task<ContentResult> CreateOrUpdate(ProductDto productDto)
         {
             ReturnMessage rm = new ReturnMessage(1, "Success");
 
             try
             {
-                var events = await Task.Run(() => _unitOfWork.Events.GetAsync(filter: e => e.Id == eventDto.Id));
-                var eventToAdd = _mapper.Map<Event>(eventDto);
+                var products = await Task.Run(() => _unitOfWork.Products.GetAsync(filter: e => e.Id == productDto.Id));
+                var productToAdd = _mapper.Map<Product>(productDto);
 
-                if (events.Count() == 0)
+                if (products.Count() == 0)
                 {
-                    eventDto.Id = 0;
-                    _unitOfWork.Events.Add(eventToAdd);
+                    productDto.Id = 0;
+                    _unitOfWork.Products.Add(productToAdd);
                 }
                 else
                 {
-                    _unitOfWork.Events.Update(eventToAdd);
+                    _unitOfWork.Products.Update(productToAdd);
                 }
 
                 var status = _unitOfWork.Complete();
-                _logger.LogInformation("Log:Add Event for ID: {Id}", eventToAdd.Id);
+                _logger.LogInformation("Log:Add Product for ID: {Id}", productToAdd.Id);
                 return this.Content(rm.returnMessage(null),
                          "application/json");
             }
@@ -94,26 +93,26 @@ namespace PlatterFusion.API.Controllers
         }
 
         [HttpPost("delete")]
-        public async Task<ContentResult> Delete(GetEventInput input)
+        public async Task<ContentResult> Delete(GetProductInput input)
         {
             ReturnMessage rm = new ReturnMessage(1, "Success");
 
             try
             {
-                var events = await Task.Run(() => _unitOfWork.Events.GetAsync(filter: e => e.Id == input.Id));
+                var products = await Task.Run(() => _unitOfWork.Products.GetAsync(filter: e => e.Id == input.Id));
 
-                if (events.Count() == 0)
+                if (products.Count() == 0)
                 {
                     rm.msgCode = -1;
                     rm.msg = "Not Found";
                 }
                 else
                 {
-                    _unitOfWork.Events.Remove(events.First());
+                    _unitOfWork.Products.Remove(products.First());
                     _unitOfWork.Complete();
                 }
 
-                _logger.LogInformation("Log:Delete Event for ID: {Id}", input.Id);
+                _logger.LogInformation("Log:Delete Product for ID: {Id}", input.Id);
                 return this.Content(rm.returnMessage(null),
                             "application/json");
             }

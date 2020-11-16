@@ -9,6 +9,7 @@ namespace PlatterFusion.API.Persistence
     public interface IUnitOfWork : IDisposable
     {
         IEventRepository Events { get; }
+        IProductRepository Products { get; }
         int Complete();
     }
 }
