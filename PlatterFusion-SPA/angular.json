@@ -119,6 +119,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "PlatterFusion-SPA"
+    }
+  },
+  "defaultProject": "PlatterFusion-SPA",
+  "cli": {
+    "analytics": false
+  }
 }
