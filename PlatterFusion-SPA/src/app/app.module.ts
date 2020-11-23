@@ -1,3 +1,4 @@
+import { SharedModule } from './_module/shared.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
@@ -24,6 +25,7 @@ import { SidebarComponent } from './sidebar/sidebar.component';
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
+    SharedModule,
     BrowserAnimationsModule
   ],
   providers: [],

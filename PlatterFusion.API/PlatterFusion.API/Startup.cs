@@ -35,7 +35,7 @@ namespace PlatterFusion.API
             services.AddDbContext<DataContext>(options =>
                 options.UseSqlServer(
                    Configuration.GetConnectionString("PlatterFusionDatabase")).UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking));
-
+            services.AddCors();
             services.AddControllers();
         }
 
@@ -50,6 +50,11 @@ namespace PlatterFusion.API
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors(x => x.AllowAnyHeader()
+                .AllowAnyMethod()
+                .AllowCredentials()
+                .WithOrigins("https://localhost:4200"));
 
             app.UseAuthorization();
 
