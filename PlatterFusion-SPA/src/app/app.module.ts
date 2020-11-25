@@ -5,12 +5,13 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {HttpClientModule} from '@angular/common/http';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavComponent } from './nav/nav.component';
 import { HomeComponent } from './home/home.component';
 import { EventComponent } from './event/event.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
+import { AddEventComponent } from './add-event/add-event.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { SidebarComponent } from './sidebar/sidebar.component';
     NavComponent,
     HomeComponent,
     EventComponent,
-    SidebarComponent
+    SidebarComponent,
+    AddEventComponent
   ],
   imports: [
     BrowserModule,
@@ -26,7 +28,8 @@ import { SidebarComponent } from './sidebar/sidebar.component';
     HttpClientModule,
     FormsModule,
     SharedModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

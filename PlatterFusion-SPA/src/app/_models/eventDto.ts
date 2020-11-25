@@ -1,4 +1,4 @@
-export interface Event {
+export class EventDto {
     Id: number;
   Name: string;
   Description: string;

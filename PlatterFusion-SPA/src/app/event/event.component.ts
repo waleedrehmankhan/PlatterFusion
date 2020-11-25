@@ -1,4 +1,4 @@
-import { Event } from './../_models/events';
+import { EventDto } from './../_models/eventDto';
 import { DataService } from './../_services/data.service';
 import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
@@ -12,7 +12,7 @@ import { Subject } from 'rxjs';
 })
 export class EventComponent implements OnInit {
 
-  eventArray: Event[];
+  eventArray: EventDto[];
   loadAllUrl: any = 'event/all';
   deleteUrl: any = 'event/delete';
   editUrl: any = 'event/edit';
