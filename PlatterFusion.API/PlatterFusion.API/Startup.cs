@@ -15,28 +15,34 @@ using PlatterFusion.API.Data;
 using PlatterFusion.API.Persistence;
 using AutoMapper;
 using PlatterFusion.API.Helpers;
+using PlatterFusion.API.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using PlatterFusion.API.Extensions;
 
 namespace PlatterFusion.API
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        private readonly IConfiguration _config;
+
+        public Startup(IConfiguration config)
         {
-            Configuration = configuration;
+            _config = config;
         }
 
-        public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddApplicationServices(_config);
             services.AddAutoMapper(typeof(AutoMapperProfile));
             services.AddScoped<IUnitOfWork, UnitOfWork>();
-            services.AddDbContext<DataContext>(options =>
-                options.UseSqlServer(
-                   Configuration.GetConnectionString("PlatterFusionDatabase")).UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking));
             services.AddCors();
             services.AddControllers();
+            services.AddIdentityServices(_config);
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -55,6 +61,8 @@ namespace PlatterFusion.API
                 .AllowAnyMethod()
                 .AllowCredentials()
                 .WithOrigins("https://localhost:4200"));
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

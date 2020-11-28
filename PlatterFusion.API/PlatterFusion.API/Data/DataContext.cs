@@ -13,6 +13,7 @@ namespace PlatterFusion.API.Data
         {
         }
 
+        public DbSet<AppUser> AppUsers { get; set; }
         public DbSet<Event> Events { get; set; }
         public DbSet<Product> Products { get; set; }
     }

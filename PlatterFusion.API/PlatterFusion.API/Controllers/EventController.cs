@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -14,9 +15,7 @@ using PlatterFusion.API.Persistence.Repositories.Event;
 
 namespace PlatterFusion.API.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class EventController : ControllerBase
+    public class EventController : BaseApiController
     {
 
         #region Configuration
@@ -35,6 +34,7 @@ namespace PlatterFusion.API.Controllers
         #endregion
 
         [HttpPost("all")]
+        [Authorize]
         public async Task<ContentResult> GetAll(GetEventInput input)
         {
             try

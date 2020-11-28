@@ -14,9 +14,7 @@ using PlatterFusion.API.Persistence.Repositories.Product;
 
 namespace PlatterFusion.API.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class ProductController : ControllerBase
+    public class ProductController : BaseApiController
     {
         #region Configuration
 
