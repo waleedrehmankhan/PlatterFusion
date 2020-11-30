@@ -1,6 +1,6 @@
-export class EventDto {
+export interface EventDto {
     Id: number;
-  Name: string;
-  Description: string;
+  name: string;
+  description: string;
   isActive: boolean;
 }

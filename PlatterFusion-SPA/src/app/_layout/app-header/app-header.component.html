@@ -1,0 +1,17 @@
+<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+    <h5 class="my-0 mr-md-auto font-weight-normal">Platter Fusion</h5>
+    <nav class="my-2 my-md-0 mr-md-3">
+      <a class="p-2 text-dark" href="#">Users</a>
+      <a class="p-2 text-dark" href="#">Events</a>
+      <a class="p-2 text-dark" href="#">Products</a>
+      <a class="p-2 text-dark" href="#">Orders</a>
+    </nav>
+    <div class="dropdown text-dark" *ngIf="accountService.currentUser$ | async" dropdown>
+      <a class="dropdown-toggle text-dark ml-2" dropdownToggle>Welcome User</a>
+      <div class="dropdown-menu mt-3" *dropdownMenu>
+          <a routerLink='/member/edit' class="dropdown-item">Edit Profile</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" (click)="logout()" >Logout</a>
+      </div>
+  </div>
+  </div>

@@ -1,5 +1,5 @@
+import { EventService } from './../_services/event.service';
 import { EventDto } from './../_models/eventDto';
-import { DataService } from './../_services/data.service';
 import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
@@ -13,25 +13,20 @@ import { Subject } from 'rxjs';
 export class EventComponent implements OnInit {
 
   eventArray: EventDto[];
-  loadAllUrl: any = 'event/all';
-  deleteUrl: any = 'event/delete';
-  editUrl: any = 'event/edit';
-  refresh = new Subject<boolean>();
 
   constructor(
-    private _dataService: DataService,
+    private eventService: EventService,
     private toastr: ToastrService,
     private router: Router
   ) {}
 
   ngOnInit(): void {
-    this.loatEvents();
+    this.getEvents();
   }
 
-  loatEvents() {
-    this._dataService
-      .postData(this.loadAllUrl, { id: 0 })
-      .subscribe((response) => {
+  getEvents() {
+    this.eventService.getEvents({ id: 0 })
+      .subscribe((response: any) => {
         this.eventArray = response.data.Items;
         console.log(this.eventArray);
       });
@@ -42,9 +37,8 @@ export class EventComponent implements OnInit {
   }
 
   deleteClicked(data) {
-    this._dataService
-      .postData(this.deleteUrl, { id: data })
-      .subscribe((response) => {
+    this.eventService.deleteEvent({ id: data })
+      .subscribe((response: any) => {
         this.removeRow(data);
         this.toastr.success(response.message.msg);
       });

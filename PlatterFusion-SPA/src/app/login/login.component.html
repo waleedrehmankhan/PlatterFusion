@@ -1,0 +1,71 @@
+<div class="text-center">
+    
+
+    <form #loginForm="ngForm" (ngSubmit)="login()" autocomplete="off" class="form-signin">
+        <img class="mb-4" src="https://getbootstrap.com/docs/4.5/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
+        <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+        <label for="inputEmail" class="sr-only">Email address</label>
+        <input 
+        type="email" 
+        name="username" 
+        class="form-control" 
+        placeholder="Username"
+        [(ngModel)]="model.username" 
+        >
+        <label for="inputPassword" class="sr-only">Password</label>
+        <input 
+        type="password" 
+        name="password" 
+        class="form-control" 
+        placeholder="Password" 
+        [(ngModel)]="model.password"
+        >
+
+        <div class="checkbox mb-3">
+          <label>
+            <input type="checkbox" value="remember-me"> Remember me
+          </label>
+        </div>
+        
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+        <p class="mt-5 mb-3 text-muted">© Platter Fusion 2020</p>
+
+        <hr>
+        <div *ngIf="validationErrors.length > 0">
+            <div class="alert alert-danger" *ngFor="let error of validationErrors">
+                    {{error}}
+            </div>
+        </div>
+
+      </form>
+
+
+</div>
+
+
+<!-- <div class="login-wrapper">
+    <div class="card">
+        <div class="card-body">
+            <form class="form-signin" (ngSubmit)="onSubmit(signInForm)" #signInForm="ngForm">
+                <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+
+                <label for="inputlogin" class="sr-only">Login </label>
+                <input type="text" id="inputLogin" class="form-control" name="login" placeholder="Login" ngModel
+                    required autofocus>
+
+                <label for="inputPassword" class="sr-only">Password</label>
+                <input type="password" id="inputPassword" class="form-control" name="password" placeholder="Password"
+                    autocomplete="on" ngModel required>
+
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+
+                <div class="alert alert-danger" role="alert" *ngIf="isFormValid">
+                    Please fill all fields.
+                </div>
+                <div class="alert alert-danger" role="alert" *ngIf="areCredentialsInvalid">
+                    Invalid user or password.
+                </div>
+            </form>
+        </div>
+    </div>
+</div> -->

@@ -5,38 +5,39 @@
         Create New Event
       </h3>
 
-      <form
-      [formGroup]="eventForm"
-        (ngSubmit)="eventForm.valid && onSubmit()"
-        autocomplete="off"
-      >
+      <form #eventForm="ngForm" (ngSubmit)="Create()" autocomplete="off">
           <div class="form-group">
             <label for="inputName"><b>Event Name</b></label>
             <input
               type="text"
+              name="name"
               class="form-control"
-              formControlName="Name"
+              [(ngModel)]="model.Name"
               placeholder="Event Name"
-              required
             />
           </div>
           <div class="form-group">
             <label for="inputDescription"><b>Description</b></label>
             <input
+              name="description"
               type="text"
               class="form-control"
-              formControlName="Description"
+              [(ngModel)]="model.Description"
               placeholder="Event Description"
-              required
             />
           </div>
 
-        <button type="submit" class="btn btn-primary">Sign in</button>
-        <a type="button" class="ml-3 btn btn-danger" routerLink="/event"
-          >Cancel</a
-        >
+        <button type="submit" class="btn btn-primary button">Create</button>
+        <a type="button" class="ml-3 btn btn-danger button" routerLink="/event">Cancel</a>
       </form>
-        
+
+      <hr>
+        <div *ngIf="validationErrors.length > 0">
+            <div class="alert alert-danger" *ngFor="let error of validationErrors">
+                    {{error}}
+            </div>
+        </div>
+
     </div>
   </div>
 </div>

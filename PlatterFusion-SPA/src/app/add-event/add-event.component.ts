@@ -1,9 +1,7 @@
-import { EventDto } from './../_models/eventDto';
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { DataService } from '../_services/data.service';
+import { EventService } from '../_services/event.service';
 
 @Component({
   selector: 'app-add-event',
@@ -11,33 +9,24 @@ import { DataService } from '../_services/data.service';
   styleUrls: ['./add-event.component.css'],
 })
 export class AddEventComponent implements OnInit {
-  createUrl: any = 'event/save';
-  eventDto = new EventDto();
+  model: any = {};
+  validationErrors: string[] = [];
+
 
   constructor(
-    private _dataService: DataService,
+    private eventService: EventService,
     private toastr: ToastrService,
     private router: Router
   ) {}
 
-  eventForm = new FormGroup({
-    Name: new FormControl(''),
-    Description: new FormControl(''),
-  });
-
   ngOnInit(): void {}
 
-  onSubmit() {
-    console.warn('Your order has been submitted', this.eventForm.value);
-    this.eventDto.Name = this.eventForm.value.Name;
-    this.eventDto.Description = this.eventForm.value.Description;
-    this.eventDto.isActive = true;
-
-    this._dataService
-      .postData(this.createUrl, this.eventDto)
-      .subscribe((response) => {
-        this.toastr.success(response.message.msg);
-        this.router.navigateByUrl('/event');
-      });
+  Create() {
+    this.eventService.saveEvent(this.model).subscribe((response: any) => {
+      this.toastr.success(response.message.msg);
+      this.router.navigateByUrl('/event');
+    }, error => {
+      this.validationErrors = error;
+    });
   }
 }

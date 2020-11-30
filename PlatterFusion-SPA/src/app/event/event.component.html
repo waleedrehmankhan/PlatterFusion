@@ -1,57 +1,63 @@
 <!-- Page Heading -->
-<h1 class="h3 mb-4 text-gray-800">Blank Page</h1>
-<div class="col-xl-12 col-12 mb-4 mb-xl-0">
-  <div class="row">
-    <div class="col-xl-11">
-      <h3 class="text-Dark text-center mb-3 font-weight-bold">Event Details</h3>
+
+<div class="container">
+<br>
+<br>
+<br>
+  <div class="col-xl-12 col-12 mb-4 mb-xl-0">
+    <div class="row">
+      <div class="col-xl-11">
+        <h3 class="text-Dark text-center mb-3 font-weight-bold">Event Details</h3>
+      </div>
+      <div class="col-xl-1">
+        <a type="button" class="btn btn-primary text-light" routerLink='/addevent'>Create</a>
+      </div>
     </div>
-    <div class="col-xl-1">
-      <a type="button" class="btn btn-primary text-light" routerLink='/addevent'>Create</a>
-    </div>
+    
+    <table class="table table-striped bg-light text-center">
+      <thead>
+        <tr class="text-muted">
+          <th>Event ID</th>
+          <th>Event Name</th>
+          <th>Event Description</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let event of eventArray">
+          <td>{{ event.Id }}</td>
+          <td>{{ event.Name }}</td>
+          <td>{{ event.Description }}</td>
+          <td><i class="fa fa-pencil fa-lg text-primary button mr-3" (click)="editClicked(event.Id)"></i> <i class="fa fa-minus-circle fa-lg text-danger button" (click)="deleteClicked(event.Id)"></i></td>
+        </tr>
+      </tbody>
+    </table>
+  
+    <!-- pagination -->
+    <nav>
+      <ul class="pagination justify-content-center">
+        <li class="page-item">
+          <a href="#" class="page-link py-2 px-3">
+            <span>«</span>
+          </a>
+        </li>
+        <li class="page-item active">
+          <a href="#" class="page-link py-2 px-3"> 1 </a>
+        </li>
+        <li class="page-item">
+          <a href="#" class="page-link py-2 px-3"> 2 </a>
+        </li>
+        <li class="page-item">
+          <a href="#" class="page-link py-2 px-3"> 3 </a>
+        </li>
+        <li class="page-item">
+          <a href="#" class="page-link py-2 px-3">
+            <span>»</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+    <!-- end of pagination -->
   </div>
   
-  <table class="table table-striped bg-light text-center">
-    <thead>
-      <tr class="text-muted">
-        <th>Event ID</th>
-        <th>Event Name</th>
-        <th>Event Description</th>
-        <th>Action</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let event of eventArray">
-        <td>{{ event.Id }}</td>
-        <td>{{ event.Name }}</td>
-        <td>{{ event.Description }}</td>
-        <td><i class="fa fa-pencil fa-lg text-primary button mr-3" (click)="editClicked(event.Id)"></i> <i class="fa fa-minus-circle fa-lg text-danger button" (click)="deleteClicked(event.Id)"></i></td>
-      </tr>
-    </tbody>
-  </table>
-
-  <!-- pagination -->
-  <nav>
-    <ul class="pagination justify-content-center">
-      <li class="page-item">
-        <a href="#" class="page-link py-2 px-3">
-          <span>«</span>
-        </a>
-      </li>
-      <li class="page-item active">
-        <a href="#" class="page-link py-2 px-3"> 1 </a>
-      </li>
-      <li class="page-item">
-        <a href="#" class="page-link py-2 px-3"> 2 </a>
-      </li>
-      <li class="page-item">
-        <a href="#" class="page-link py-2 px-3"> 3 </a>
-      </li>
-      <li class="page-item">
-        <a href="#" class="page-link py-2 px-3">
-          <span>»</span>
-        </a>
-      </li>
-    </ul>
-  </nav>
-  <!-- end of pagination -->
 </div>
