@@ -1,9 +1,9 @@
 <!-- Page Heading -->
 
 <div class="container">
-<br>
-<br>
-<br>
+  <br>
+  <br>
+  <br>
   <div class="col-xl-12 col-12 mb-4 mb-xl-0">
     <div class="row">
       <div class="col-xl-11">
@@ -13,7 +13,7 @@
         <a type="button" class="btn btn-primary text-light" routerLink='/addevent'>Create</a>
       </div>
     </div>
-    
+
     <table class="table table-striped bg-light text-center">
       <thead>
         <tr class="text-muted">
@@ -28,11 +28,14 @@
           <td>{{ event.Id }}</td>
           <td>{{ event.Name }}</td>
           <td>{{ event.Description }}</td>
-          <td><i class="fa fa-pencil fa-lg text-primary button mr-3" (click)="editClicked(event.Id)"></i> <i class="fa fa-minus-circle fa-lg text-danger button" (click)="deleteClicked(event.Id)"></i></td>
+          <td>
+            <i class="fa fa-pencil fa-lg text-primary button mr-3" [routerLink]="['/addevent']" [queryParams]="{id: event.Id, name: event.Name, description: event.Description}" ></i>
+            <i class="fa fa-minus-circle fa-lg text-danger button" (click)="deleteClicked(event.Id)"></i>
+          </td>
         </tr>
       </tbody>
     </table>
-  
+
     <!-- pagination -->
     <nav>
       <ul class="pagination justify-content-center">
@@ -59,5 +62,5 @@
     </nav>
     <!-- end of pagination -->
   </div>
-  
+
 </div>

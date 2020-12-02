@@ -22,6 +22,7 @@ import { SiteHeaderComponent } from './_layout/site-header/site-header.component
 import { SiteLayoutComponent } from './_layout/site-layout/site-layout.component';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { NgxErrorsModule } from '@ultimate/ngxerrors';
 
 @NgModule({
   declarations: [
@@ -44,9 +45,10 @@ import { NotFoundComponent } from './not-found/not-found.component';
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    SharedModule,
-    BrowserAnimationsModule,
     ReactiveFormsModule,
+    SharedModule,
+    NgxErrorsModule,
+    BrowserAnimationsModule,
     BsDropdownModule.forRoot()
   ],
   providers: [

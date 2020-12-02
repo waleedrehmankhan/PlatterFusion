@@ -5,39 +5,38 @@
         Create New Event
       </h3>
 
-      <form #eventForm="ngForm" (ngSubmit)="Create()" autocomplete="off">
-          <div class="form-group">
-            <label for="inputName"><b>Event Name</b></label>
-            <input
-              type="text"
-              name="name"
-              class="form-control"
-              [(ngModel)]="model.Name"
-              placeholder="Event Name"
-            />
+      <form [formGroup]="eventForm" (ngSubmit)="Create()" autocomplete="off" novalidate>
+        <div class="form-row">
+          <label for="inputName"><b>Event Name</b></label>
+          <input type="text"
+                 formControlName="name"
+                 class="form-control"
+                 placeholder="Event Name" />
+          <div ngxErrors="name">
+            <div ngxError="required" when="touched" class="text-danger">Name is required.</div>
+            <div ngxError="minlength" when="dirty" class="text-danger">Minimum length should be 2 characters.</div>
+            <div ngxError="maxlength" when="dirty" class="text-danger">Max length should not exceed 60 characters.</div>
+            <div ngxError="pattern" when="dirty" class="text-danger">Only alphanumeric characters are allowed.</div>
+            <div ngxErrorRemote class="text-danger"></div>
           </div>
-          <div class="form-group">
-            <label for="inputDescription"><b>Description</b></label>
-            <input
-              name="description"
-              type="text"
-              class="form-control"
-              [(ngModel)]="model.Description"
-              placeholder="Event Description"
-            />
-          </div>
-
-        <button type="submit" class="btn btn-primary button">Create</button>
-        <a type="button" class="ml-3 btn btn-danger button" routerLink="/event">Cancel</a>
-      </form>
-
-      <hr>
-        <div *ngIf="validationErrors.length > 0">
-            <div class="alert alert-danger" *ngFor="let error of validationErrors">
-                    {{error}}
-            </div>
         </div>
-
+        <div class="form-row">
+          <label for="Description">
+            <b>Description</b>
+          </label>
+          <textarea class="form-control" rows="2" style="background-color:#F8FCFE;" formControlName="description"></textarea>
+          <div ngxErrors="description">
+            <div ngxError="required" when="touched" class="text-danger">Description is required.</div>
+            <div ngxError="maxlength" when="dirty" class="text-danger">Maximum 200 characters are allowed.</div>
+            <div ngxError="pattern" when="dirty" class="text-danger">Only characters are allowed.</div>
+            <div ngxErrorRemote class="text-danger"></div>
+          </div>
+        </div>
+        <div class="mt-2">
+          <button type="submit" class="btn btn-primary button">Create</button>
+          <a type="button" class="ml-3 btn btn-danger button" routerLink="/event">Cancel</a>
+        </div>
+      </form>
     </div>
   </div>
 </div>
