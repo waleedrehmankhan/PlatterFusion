@@ -338,3 +338,5 @@ ASALocalRun/
 
 # BeatPulse healthcheck temp database
 healthchecksdb
+PlatterFusion.API/PlatterFusion.API/appsettings.json
+PlatterFusion-SPA/src/environments/environment.ts
