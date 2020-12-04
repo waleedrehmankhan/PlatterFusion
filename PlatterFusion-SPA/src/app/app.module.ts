@@ -23,6 +23,7 @@ import { SiteLayoutComponent } from './_layout/site-layout/site-layout.component
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { ProductComponent } from './product/product.component';
+import { AddProductComponent } from './add-product/add-product.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { ProductComponent } from './product/product.component';
     SiteHeaderComponent,
     SiteLayoutComponent,
     NotFoundComponent,
-    ProductComponent
+    ProductComponent,
+    AddProductComponent
   ],
   imports: [
     BrowserModule,

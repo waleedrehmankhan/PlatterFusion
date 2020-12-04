@@ -1,3 +1,4 @@
+import { AddProductComponent } from './add-product/add-product.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { AuthGuard } from './_guards/auth.guard';
 import { AddEventComponent } from './add-event/add-event.component';
@@ -29,6 +30,7 @@ const routes: Routes = [
       { path: 'event', component: EventComponent },
       { path: 'addevent', component: AddEventComponent },
       { path: 'product', component: ProductComponent },
+      { path: 'addproduct', component: AddProductComponent}
     ],
   },
 
