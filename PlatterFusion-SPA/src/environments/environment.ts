@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  // apiUrl: 'https://platterfusion.azurewebsites.net/api/'
-  apiUrl: 'https://localhost:44301/api/'
+  apiUrl: 'https://platterfusion.azurewebsites.net/api/'
+  // apiUrl: 'https://localhost:44301/api/'
 };
 
 /*

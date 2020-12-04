@@ -1,6 +1,6 @@
 export interface EventDto {
     Id: number;
-  name: string;
-  description: string;
+  Name: string;
+  Description: string;
   isActive: boolean;
 }
