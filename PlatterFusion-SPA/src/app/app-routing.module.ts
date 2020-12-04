@@ -8,6 +8,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { SiteLayoutComponent } from './_layout/site-layout/site-layout.component';
 import { AppLayoutComponent } from './_layout/app-layout/app-layout.component';
+import { ProductComponent } from './product/product.component';
 
 const routes: Routes = [
   //Site routes goes here
@@ -27,6 +28,7 @@ const routes: Routes = [
       { path: 'dashboard', component: HomeComponent },
       { path: 'event', component: EventComponent },
       { path: 'addevent', component: AddEventComponent },
+      { path: 'product', component: ProductComponent },
     ],
   },
 

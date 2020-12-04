@@ -18,8 +18,7 @@ export class EventComponent implements OnInit {
 
   constructor(
     private eventService: EventService,
-    private toastr: ToastrService,
-    private router: Router
+    private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -30,7 +29,6 @@ export class EventComponent implements OnInit {
     this.eventService.getEvents({ id: 0 })
       .subscribe((response: any) => {
         this.eventArray = response.data.Items;
-        console.log(this.eventArray);
       });
   }
 

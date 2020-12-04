@@ -57,7 +57,6 @@ namespace PlatterFusion.API.Controllers
         }
 
         [HttpPost("save")]
-        [ValidateFilter]
         public async Task<ContentResult> CreateOrUpdate(ProductDto productDto)
         {
             ReturnMessage rm = new ReturnMessage(1, "Success");

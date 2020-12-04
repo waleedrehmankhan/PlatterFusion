@@ -22,6 +22,7 @@ import { SiteHeaderComponent } from './_layout/site-header/site-header.component
 import { SiteLayoutComponent } from './_layout/site-layout/site-layout.component';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { ProductComponent } from './product/product.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { NotFoundComponent } from './not-found/not-found.component';
     SiteFooterComponent,
     SiteHeaderComponent,
     SiteLayoutComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    ProductComponent
   ],
   imports: [
     BrowserModule,
