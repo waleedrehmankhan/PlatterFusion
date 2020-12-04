@@ -1,6 +1,7 @@
 import { EventService } from './../_services/event.service';
 import { EventDto } from './../_models/eventDto';
-import { Component, OnInit } from '@angular/core';
+import { EventBindingModel } from './../_models/bindingModels';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
@@ -13,6 +14,7 @@ import { Subject } from 'rxjs';
 export class EventComponent implements OnInit {
 
   eventArray: EventDto[];
+  currentEvent: EventBindingModel =  new EventBindingModel();
 
   constructor(
     private eventService: EventService,
@@ -33,7 +35,7 @@ export class EventComponent implements OnInit {
   }
 
   editClicked($data) {
-    console.log($data);
+    this.eventService.changeMessage($data);
   }
 
   deleteClicked(data) {

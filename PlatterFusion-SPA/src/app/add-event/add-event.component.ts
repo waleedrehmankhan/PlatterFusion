@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { EventService } from '../_services/event.service';
@@ -12,14 +12,18 @@ export class AddEventComponent implements OnInit {
   model: any = {};
   validationErrors: string[] = [];
 
-
   constructor(
     private eventService: EventService,
     private toastr: ToastrService,
     private router: Router
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit() {
+    this.eventService.currentMessage.subscribe((response: any) => {
+      if (response != '')
+      this.model = response;
+    });
+  }
 
   Create() {
     this.eventService.saveEvent(this.model).subscribe((response: any) => {
@@ -29,4 +33,10 @@ export class AddEventComponent implements OnInit {
       this.validationErrors = error;
     });
   }
+}
+
+class AddEventBindingModel {
+  Id: number;
+  Name: string;
+  Description: string;
 }
