@@ -1,7 +1,7 @@
-import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { EventService } from '../_services/event.service';
+import { EventService } from "src/app/_services/event.service";
 
 @Component({
   selector: 'app-add-event',

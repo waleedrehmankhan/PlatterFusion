@@ -11,9 +11,9 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavComponent } from './nav/nav.component';
 import { HomeComponent } from './home/home.component';
-import { EventComponent } from './event/event.component';
+import { EventComponent } from './events/event-list/event.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
-import { AddEventComponent } from './add-event/add-event.component';
+
 import { LoginComponent } from './login/login.component';
 import { AppHeaderComponent } from './_layout/app-header/app-header.component';
 import { AppLayoutComponent } from './_layout/app-layout/app-layout.component';
@@ -23,15 +23,14 @@ import { SiteLayoutComponent } from './_layout/site-layout/site-layout.component
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { ProductComponent } from './product/product.component';
+import { EventsModule } from './events/events.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavComponent,
     HomeComponent,
-    EventComponent,
     SidebarComponent,
-    AddEventComponent,
     LoginComponent,
     AppHeaderComponent,
     AppLayoutComponent,
@@ -42,11 +41,12 @@ import { ProductComponent } from './product/product.component';
     ProductComponent
   ],
   imports: [
-    BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
     SharedModule,
+    EventsModule,
+    BrowserModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
     BsDropdownModule.forRoot()

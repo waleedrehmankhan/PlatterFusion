@@ -1,6 +1,6 @@
-import { EventService } from './../_services/event.service';
-import { EventDto } from './../_models/eventDto';
-import { EventBindingModel } from './../_models/bindingModels';
+import { EventService } from "src/app/_services/event.service";
+import { EventDto } from "src/app/_models/eventDto";
+import { EventBindingModel } from "src/app/_models/bindingModels";
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
