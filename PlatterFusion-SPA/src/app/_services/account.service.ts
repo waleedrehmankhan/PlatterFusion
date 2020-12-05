@@ -42,6 +42,7 @@ export class AccountService {
   getCurrentUser(){
     const user = JSON.parse(localStorage.getItem('user'));
     if(user) { this.currentUserSource.next(user); }
+    return user;
   }
 
 }

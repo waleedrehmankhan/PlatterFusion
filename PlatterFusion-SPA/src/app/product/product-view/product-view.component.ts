@@ -1,16 +1,15 @@
-import { ToastrService } from 'ngx-toastr';
-import { ProductService } from './../_services/product.service';
-import { ProductDto } from './../_models/productDto';
 import { Component, OnInit } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
+import { ProductDto } from '../../_models/productDto';
+import { ProductService } from '../../_services/product.service';
 
 @Component({
-  selector: 'app-product',
-  templateUrl: './product.component.html',
-  styleUrls: ['./product.component.css']
+  selector: 'app-product-view',
+  templateUrl: './product-view.component.html',
+  styleUrls: ['./product-view.component.css']
 })
-export class ProductComponent implements OnInit {
+export class ProductViewComponent implements OnInit {
   productArray: ProductDto[];
-
 
   constructor(private productService: ProductService, private toastr: ToastrService) { }
 

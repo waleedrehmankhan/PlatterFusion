@@ -28,7 +28,7 @@ export class AddEventComponent implements OnInit {
   Create() {
     this.eventService.saveEvent(this.model).subscribe((response: any) => {
       this.toastr.success(response.message.msg);
-      this.router.navigateByUrl('/event');
+      this.router.navigateByUrl('/app/event/view');
     }, error => {
       this.validationErrors = error;
     });

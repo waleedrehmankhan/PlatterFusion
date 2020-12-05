@@ -1,45 +1,55 @@
+import { AuthGuard } from './_guards/auth.guard';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { EventsModule } from './events/events.module';
 import { LoginComponent } from './login/login.component';
 import { SiteLayoutComponent } from './_layout/site-layout/site-layout.component';
+import { AppLayoutComponent } from './_layout/app-layout/app-layout.component';
+import { ErrorComponent } from './error/error.component';
 
 const appRoutes: Routes = [
-  //Site routes goes here
+  //no layout routes
+  { 
+    path: 'login',
+    component: LoginComponent 
+  },
+  //App routes goes here
+  {
+    path: 'app',
+    canActivate: [AuthGuard],
+    runGuardsAndResolvers: 'always',
+    component: AppLayoutComponent,
+    children: [
+      { path: '', redirectTo: 'login', pathMatch: 'full' },
+      {
+        path: "event",
+        loadChildren: () =>
+          import("./events/events.module").then((m) => m.EventsModule),
+        data: { breadcrumb: "Event" },
+      },
+      {
+        path: "product",
+        loadChildren: () =>
+          import("./product/product.module").then((m) => m.ProductModule),
+        data: { breadcrumb: "Product" },
+      },
+      {
+        path: "order",
+        loadChildren: () =>
+          import("./orders/orders.module").then((m) => m.OrdersModule),
+        data: { breadcrumb: "Order" },
+      }
+    ]
+  },
+  //App routes goes here
   {
     path: '',
-    component: SiteLayoutComponent
+    component: SiteLayoutComponent,
+    children: [
+    ]
   },
-
-  // App routes goes here here
-  //{
-  //  path: '',
-  //  component: AppLayoutComponent,
-  //  runGuardsAndResolvers: 'always',
-  //  canActivate: [AuthGuard],
-  //  children: [
-  //    { path: 'dashboard', component: HomeComponent },
-  //    { path: 'event', component: EventComponent },
-  //    { path: 'addevent', component: AddEventComponent },
-  //    { path: 'product', component: ProductComponent },
-  //    { path: 'addproduct', component: AddProductComponent}
-  //  ],
-  //},
-
-  //no layout routes
-  { path: 'login', component: LoginComponent },
-  //{ path: 'not-found', component: NotFoundComponent },
-
-  // otherwise redirect to home
-  //{ path: '**', redirectTo: '' },
-  //{ path: "", redirectTo: "event", pathMatch: "full" },
-  //{
-  //  path: '',
-  //  loadChildren: () => import('src/app/events/events.module').then(c => c.EventsModule)
-    
-  //},
-  //{ path: 'not-found', component: NotFoundComponent },
-  //{ path: '**', redirectTo: '/not-found' }
+  // Random routes here
+  { path: '**', component : ErrorComponent}
 ];
 
 @NgModule({

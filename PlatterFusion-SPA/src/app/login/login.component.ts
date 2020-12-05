@@ -15,12 +15,13 @@ export class LoginComponent implements OnInit {
   constructor(private service: AccountService, private router: Router) { }
 
   ngOnInit(): void {
+    if(this.service.getCurrentUser() != null) { this.router.navigateByUrl('/app/event/view')}
   }
 
   login() {
     this.service.login(this.model).subscribe(response => {
       console.log(response);
-      this.router.navigateByUrl('/event');
+      this.router.navigateByUrl('/app/event/view');
     }, error => {
       console.log(error);
       this.validationErrors = error;

@@ -1,14 +1,14 @@
-import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { ProductService } from './../_services/product.service';
 import { Component, OnInit } from '@angular/core';
+import { ProductService } from '../../_services/product.service';
+import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-add-product',
-  templateUrl: './add-product.component.html',
-  styleUrls: ['./add-product.component.css']
+  selector: 'app-product-add',
+  templateUrl: './product-add.component.html',
+  styleUrls: ['./product-add.component.css']
 })
-export class AddProductComponent implements OnInit {
+export class ProductAddComponent implements OnInit {
   model: any = {};
   validationErrors: string[] = [];
 
@@ -24,7 +24,7 @@ export class AddProductComponent implements OnInit {
     this.productService.saveProduct(this.model).subscribe((response: any) => {
       debugger;
       this.toastr.success(response.message.msg);
-      this.router.navigateByUrl('/product');
+      this.router.navigateByUrl('/app/product/view');
     }, error => {
       this.validationErrors = error;
     });

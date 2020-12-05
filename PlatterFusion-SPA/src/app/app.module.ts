@@ -9,10 +9,6 @@ import { AppComponent } from './app.component';
 import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NavComponent } from './nav/nav.component';
-import { HomeComponent } from './home/home.component';
-import { EventComponent } from './events/event-list/event.component';
-import { SidebarComponent } from './sidebar/sidebar.component';
 
 import { LoginComponent } from './login/login.component';
 import { AppHeaderComponent } from './_layout/app-header/app-header.component';
@@ -21,25 +17,19 @@ import { SiteFooterComponent } from './_layout/site-footer/site-footer.component
 import { SiteHeaderComponent } from './_layout/site-header/site-header.component';
 import { SiteLayoutComponent } from './_layout/site-layout/site-layout.component';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
-import { NotFoundComponent } from './not-found/not-found.component';
-import { ProductComponent } from './product/product.component';
-import { AddProductComponent } from './add-product/add-product.component';
 import { EventsModule } from './events/events.module';
+import { ErrorComponent } from './error/error.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    NavComponent,
-    HomeComponent,
-    SidebarComponent,
     LoginComponent,
     AppHeaderComponent,
     AppLayoutComponent,
     SiteFooterComponent,
     SiteHeaderComponent,
     SiteLayoutComponent,
-    NotFoundComponent,
-    ProductComponent
+    ErrorComponent
   ],
   imports: [
     AppRoutingModule,

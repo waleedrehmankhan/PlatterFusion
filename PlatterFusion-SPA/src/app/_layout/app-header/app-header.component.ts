@@ -14,6 +14,7 @@ export class AppHeaderComponent implements OnInit {
   user: User;
 
   constructor(public accountService: AccountService, private router: Router) {
+    this.user = accountService.getCurrentUser();
    }
 
   ngOnInit() {
