@@ -10,25 +10,25 @@
             <h3 class="text-Dark text-center mb-3 font-weight-bold">Product Details</h3>
           </div>
           <div class="col-xl-1">
-            <a type="button" class="btn btn-primary text-light" routerLink='/addevent'>Create</a>
+            <a type="button" class="btn btn-primary text-light" routerLink='/addproduct'>Create</a>
           </div>
         </div>
         
         <table class="table table-striped bg-light text-center">
           <thead>
             <tr class="text-muted">
-              <th>Event ID</th>
-              <th>Event Name</th>
-              <th>Event Description</th>
+              <th>Product ID</th>
+              <th>Product Name</th>
+              <th>Product Description</th>
               <th>Action</th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let product of productArray">
               <td>{{ product.Id }}</td>
-              <td>{{ product.name }}</td>
-              <td>{{ product.description }}</td>
-              <td>{{ product.price }}</td>
+              <td>{{ product.Name }}</td>
+              <td class="text-truncate">{{ product.Description }}</td>
+              <td>{{ product.Price }}</td>
               <td>
                 <i class="fa fa-pencil fa-lg text-primary button mr-3" (click)="editClicked(product.Id)"></i> 
                 <i class="fa fa-minus-circle fa-lg text-danger button" (click)="deleteClicked(product.Id)"></i>

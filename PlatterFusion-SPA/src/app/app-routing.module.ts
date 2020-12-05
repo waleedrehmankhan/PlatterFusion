@@ -22,6 +22,7 @@ const appRoutes: Routes = [
   //    { path: 'event', component: EventComponent },
   //    { path: 'addevent', component: AddEventComponent },
   //    { path: 'product', component: ProductComponent },
+  //    { path: 'addproduct', component: AddProductComponent}
   //  ],
   //},
 

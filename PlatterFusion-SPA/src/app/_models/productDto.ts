@@ -1,7 +1,7 @@
 export interface ProductDto {
     Id: number,
-    name: string,
-    description: string,
-    price: number,
+    Name: string,
+    Description: string,
+    Price: number,
     isActive: boolean
 }

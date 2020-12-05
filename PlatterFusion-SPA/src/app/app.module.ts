@@ -23,6 +23,7 @@ import { SiteLayoutComponent } from './_layout/site-layout/site-layout.component
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { ProductComponent } from './product/product.component';
+import { AddProductComponent } from './add-product/add-product.component';
 import { EventsModule } from './events/events.module';
 
 @NgModule({
