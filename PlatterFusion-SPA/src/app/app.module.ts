@@ -16,7 +16,6 @@ import { AppLayoutComponent } from './_layout/app-layout/app-layout.component';
 import { SiteFooterComponent } from './_layout/site-footer/site-footer.component';
 import { SiteHeaderComponent } from './_layout/site-header/site-header.component';
 import { SiteLayoutComponent } from './_layout/site-layout/site-layout.component';
-import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { EventsModule } from './events/events.module';
 import { ErrorComponent } from './error/error.component';
 
@@ -39,8 +38,7 @@ import { ErrorComponent } from './error/error.component';
     EventsModule,
     BrowserModule,
     BrowserAnimationsModule,
-    ReactiveFormsModule,
-    BsDropdownModule.forRoot()
+    ReactiveFormsModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
