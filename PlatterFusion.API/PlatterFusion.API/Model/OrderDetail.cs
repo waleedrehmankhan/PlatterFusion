@@ -13,7 +13,6 @@ namespace PlatterFusion.API.Model
         public Product Product { get; set; }
         public Size Size { get; set; }
         public int Quantity { get; set; }
-        public float UnitPrice { get; set; }
         public string Message { get; set; }
 
         [Display(Name = "Order")]
