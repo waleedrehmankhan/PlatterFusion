@@ -19,6 +19,7 @@ import { SiteLayoutComponent } from './_layout/site-layout/site-layout.component
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { EventsModule } from './events/events.module';
 import { ErrorComponent } from './error/error.component';
+import { ProductModule } from './product/product.module';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { ErrorComponent } from './error/error.component';
     FormsModule,
     SharedModule,
     EventsModule,
+    ProductModule,
     BrowserModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,

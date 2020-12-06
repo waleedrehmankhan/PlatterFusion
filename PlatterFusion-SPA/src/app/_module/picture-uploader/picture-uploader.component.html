@@ -1,0 +1,16 @@
+<div class="picture-uploader bg-white {{skin}}" [ngStyle]="{'width.px': width - 4, 'height.px': height - 4 }">
+  <ng-container *ngIf="!url">
+    <div class="placeholder" (click)="onImageClick($event)">
+      <i class="fal fa-cloud-upload fa-4x"></i>
+      <label class="d-block mt-1">Upload image</label>
+    </div>
+  </ng-container>
+
+  <img *ngIf="url" src="{{url}}"
+       [ngStyle]="{'width.px': width, 'height.px': height }" />
+  <input #pictureInput *ngIf="editMode" (change)="onChange($event)" type="file"
+         id="uploader-input" style="display:none" />
+  <div *ngIf="url">
+    <button type="button" (click)="removeImage()" class="btn btn-info"><i class="fal fa-trash-alt fa-2x"></i></button>
+  </div>
+</div>

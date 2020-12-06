@@ -22,7 +22,6 @@ export class ProductAddComponent implements OnInit {
   Create() {
     debugger;
     this.productService.saveProduct(this.model).subscribe((response: any) => {
-      debugger;
       this.toastr.success(response.message.msg);
       this.router.navigateByUrl('/app/product/view');
     }, error => {

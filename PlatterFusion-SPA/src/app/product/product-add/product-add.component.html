@@ -1,55 +1,47 @@
 <div class="col-xl-12 col-12 mb-4 mb-xl-0">
-    <div class="row">
-      <div class="col-xl-6 col-md-6 offset-xl-3">
-        <h3 class="text-Dark text-center mb-3 font-weight-bold">
-          Create New Product
-        </h3>
-  
-        <form #productForm="ngForm" (ngSubmit)="Create()" autocomplete="off">
-            <div class="form-group">
-              <label for="inputName"><b>Product Name</b></label>
-              <input
-                type="text"
-                name="name"
-                class="form-control"
-                [(ngModel)]="model.Name"
-                placeholder="Product Name"
-              />
-            </div>
-            <div class="form-group">
-              <label for="inputDescription"><b>Description</b></label>
-              <textarea 
-                name="description"
-                type="text"
-                class="form-control"
-                [(ngModel)]="model.Description"
-                placeholder="Product Description"
-                rows="3"
-              ></textarea>
-            </div>
-            <div class="form-group">
-                <label for="inputPrice"><b>Price</b></label>
-                <input
-                  name="price"
-                  type="number"
-                  class="form-control"
-                  [(ngModel)]="model.Price"
-                  placeholder="Product Price"
-                />
-              </div>
-  
-          <button type="submit" class="btn btn-primary button">Create</button>
-          <a type="button" class="ml-3 btn btn-danger button" routerLink="/app/product/view">Cancel</a>
-        </form>
-  
-        <hr>
-          <div *ngIf="validationErrors.length > 0">
-              <div class="alert alert-danger" *ngFor="let error of validationErrors">
-                      {{error}}
-              </div>
-          </div>
-  
+  <div class="row">
+    <div class="col-xl-6 col-md-6 offset-xl-3">
+      <h3 class="text-Dark text-center mb-3 font-weight-bold">
+        Create New Product
+      </h3>
+
+      <form #productForm="ngForm" (ngSubmit)="Create()" autocomplete="off">
+        <div class="form-group">
+          <label for="inputName"><b>Product Name</b></label>
+          <input type="text"
+                 name="name"
+                 class="form-control"
+                 [(ngModel)]="model.Name"
+                 placeholder="Product Name" />
+        </div>
+        <div class="form-group">
+          <label for="inputDescription"><b>Description</b></label>
+          <textarea name="description"
+                    type="text"
+                    class="form-control"
+                    [(ngModel)]="model.Description"
+                    placeholder="Product Description"
+                    rows="3"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="inputPrice"><b>Price</b></label>
+          <input name="price"
+                 type="number"
+                 class="form-control"
+                 [(ngModel)]="model.Price"
+                 placeholder="Product Price" />
+        </div>
+          <app-picture-uploader class="form-control" width="200" height="200" name="picture" [(ngModel)]="model.picture" editMode="true"></app-picture-uploader>
+        <button type="submit" class="btn btn-primary button">Create</button>
+        <a type="button" class="ml-3 btn btn-danger button" routerLink="/app/product/view">Cancel</a>
+      </form>
+      <hr>
+      <div *ngIf="validationErrors.length > 0">
+        <div class="alert alert-danger" *ngFor="let error of validationErrors">
+          {{error}}
+        </div>
       </div>
+
     </div>
   </div>
-  
+</div>

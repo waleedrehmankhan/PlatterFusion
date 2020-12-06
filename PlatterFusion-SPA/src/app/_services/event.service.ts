@@ -27,7 +27,6 @@ export class EventService {
   }
 
   saveEvent(model: any) {
-    debugger;
     return this.http.post(this.baseUrl + 'event/save', model);
   }
 
