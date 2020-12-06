@@ -38,7 +38,7 @@ import { Angular2PromiseButtonModule } from 'angular2-promise-buttons';
     }),
   ],
   exports: [
-    Angular2PromiseButtonModule
+    Angular2PromiseButtonModule, PictureUploaderComponent
   ]
 })
 export class SharedModule { }
