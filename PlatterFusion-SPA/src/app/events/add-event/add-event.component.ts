@@ -11,7 +11,7 @@ import { EventService } from "src/app/_services/event.service";
 export class AddEventComponent implements OnInit {
   model: any = {};
   validationErrors: string[] = [];
-
+  promiseSetBySomeAction: any;
   constructor(
     private eventService: EventService,
     private toastr: ToastrService,

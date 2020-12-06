@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 export class LoginComponent implements OnInit {
 
   model: any = {};
+  isLoading: any;
   validationErrors: string[] = [];
 
   constructor(private service: AccountService, private router: Router) { }
@@ -19,7 +20,7 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    this.service.login(this.model).subscribe(response => {
+    this.isLoading = this.service.login(this.model).subscribe(response => {
       console.log(response);
       this.router.navigateByUrl('/app/event/view');
     }, error => {
