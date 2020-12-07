@@ -19,6 +19,8 @@ import { SiteLayoutComponent } from './_layout/site-layout/site-layout.component
 import { EventsModule } from './events/events.module';
 import { ErrorComponent } from './error/error.component';
 import { ProductModule } from './product/product.module';
+import { OrderCreateComponent } from './order-create/order-create.component';
+import { GooglePlaceModule } from "ngx-google-places-autocomplete"; 
 
 @NgModule({
   declarations: [
@@ -29,7 +31,8 @@ import { ProductModule } from './product/product.module';
     SiteFooterComponent,
     SiteHeaderComponent,
     SiteLayoutComponent,
-    ErrorComponent
+    ErrorComponent,
+    OrderCreateComponent
   ],
   imports: [
     AppRoutingModule,
@@ -40,7 +43,8 @@ import { ProductModule } from './product/product.module';
     ProductModule,
     BrowserModule,
     BrowserAnimationsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    GooglePlaceModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
