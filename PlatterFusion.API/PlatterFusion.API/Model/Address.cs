@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace PlatterFusion.API.Model
 {
-    public class OrderAddress
+    public class Address
     {
         public int Id { get; set; }
         public int? unit { get; set; }

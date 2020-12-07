@@ -19,6 +19,10 @@ namespace PlatterFusion.API.Helpers
             // Dto to Domain
             CreateMap<EventDto, Event>();
             CreateMap<ProductDto, Product>();
+
+            CreateMap<CustomerDetails, Customer>();
+            CreateMap<CustomerAddress, Address>();
+            CreateMap<PaymentInfo, Payment>();
         }
     }
 }

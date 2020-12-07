@@ -9,18 +9,20 @@ using Microsoft.EntityFrameworkCore;
 using PlatterFusion.API.Data;
 using PlatterFusion.API.Dtos;
 using PlatterFusion.API.Model;
+using PlatterFusion.API.Persistence;
 using PlatterFusion.API.Services;
 
 namespace PlatterFusion.API.Controllers
 {
     public class AccountController : BaseApiController
     {
-        private readonly DataContext _context;
         private readonly ITokenService _tokenService;
+        private IUnitOfWork _unitOfWork;
 
-        public AccountController(DataContext context, ITokenService tokenService)
+
+        public AccountController(IUnitOfWork unitOfWork, ITokenService tokenService)
         {
-            _context = context;
+            _unitOfWork = unitOfWork;
             _tokenService = tokenService;
         }
 
@@ -38,8 +40,8 @@ namespace PlatterFusion.API.Controllers
                 PasswordSalt = hmac.Key
             };
 
-            _context.AppUsers.Add(user);
-            await _context.SaveChangesAsync();
+            _unitOfWork.AppUsers.Add(user);
+            _unitOfWork.Complete();
 
             return new UserDto 
             {
@@ -51,10 +53,11 @@ namespace PlatterFusion.API.Controllers
         [HttpPost("login")]
         public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
         {
-            var user = await _context.AppUsers
-                .SingleOrDefaultAsync(x => x.Username.Equals(loginDto.Username));
+            var user = await Task.Run(() => _unitOfWork.AppUsers.SingleOrDefault(x => x.Username.Equals(loginDto.Username)));
+            //var user = await _context.AppUsers
+            //    .SingleOrDefaultAsync(x => x.Username.Equals(loginDto.Username));
 
-            if(user == null) return Unauthorized("Invalid Username");
+            if (user == null) return Unauthorized("Invalid Username");
 
             using var hmac = new HMACSHA512(user.PasswordSalt);
 
@@ -74,7 +77,8 @@ namespace PlatterFusion.API.Controllers
 
         private async Task<bool> UserExists(string username)
         {
-            return await _context.AppUsers.AnyAsync(x => x.Username.Equals(username.ToLower()));
+            //return await _context.AppUsers.AnyAsync(x => x.Username.Equals(username.ToLower()));
+            return await Task.Run(() => _unitOfWork.AppUsers.Find(x => x.Username.Equals(username)).Any());
         }
     }
 }
