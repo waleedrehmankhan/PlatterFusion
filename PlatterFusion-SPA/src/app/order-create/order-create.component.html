@@ -1,0 +1,140 @@
+<div class="container mt-5 justify-content-center">
+
+
+    <br>
+    <br>
+    <div class="mb-5">
+        <div class="container"> 
+            <h1>GeeksforGeeks</h1> 
+            <h2>Google Places Autocomplete</h2> 
+        <input ngx-google-places-autocomplete [options]= 
+           'options'  (onAddressChange)="AddressChange($event)"/> 
+        {{ formattedaddress }} 
+        </div> 
+          <table id="address">
+            <tr>
+              <td class="label">Street address</td>
+              <td class="slimField">
+                <input class="field" id="street_number" disabled="true" />
+              </td>
+              <td class="wideField" colspan="2">
+                <input class="field" id="route" disabled="true" />
+              </td>
+            </tr>
+            <tr>
+              <td class="label">City</td>
+              <td class="wideField" colspan="3">
+                <input class="field" id="locality" disabled="true" />
+              </td>
+            </tr>
+            <tr>
+              <td class="label">State</td>
+              <td class="slimField">
+                <input
+                  class="field"
+                  id="administrative_area_level_1"
+                  disabled="true"
+                />
+              </td>
+              <td class="label">Zip code</td>
+              <td class="wideField">
+                <input class="field" id="postal_code" disabled="true" />
+              </td>
+            </tr>
+            <tr>
+              <td class="label">Country</td>
+              <td class="wideField" colspan="3">
+                <input class="field" id="country" disabled="true" />
+              </td>
+            </tr>
+          </table>
+    </div>
+
+    <form class="needs-validation" novalidate>
+        <div class="jumbotron jumbotron-fluid">
+            <div class="container">
+                <h1 class="display-4">Graze your event!</h1>
+                <p class="lead">Lets Start With Your Address.</p>
+
+                <div class="form-row">
+                    <div class="col-md-7">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">@</span>
+                            </div>
+                            <input type="text" class="form-control" placeholder="Enter Delivery Address" aria-label="Username"
+                                aria-describedby="basic-addon1">
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="dropdown d-flex justify-content-center">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              Dropdown
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                              <button class="dropdown-item" type="button">Action</button>
+                              <button class="dropdown-item" type="button">Another action</button>
+                              <button class="dropdown-item" type="button">Something else here</button>
+                            </div>
+                          </div>
+                    </div>
+                    <div class="col-md-3">
+                        <button type="button" class="btn btn-dark">Order Now</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+
+    <form class="needs-validation" novalidate>
+        <p class="display-4  text-center mb-5">Need Some Information</p>
+
+        <div class="form-row">
+            <div class="col-md-6 mb-3">
+                <label for="validationCustom01">First Name</label>
+                <input type="text" class="form-control" id="validationCustom01" placeholder="First name" value="Shahim"
+                    required>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="validationCustom02">Last Name</label>
+                <input type="text" class="form-control" id="validationCustom02" placeholder="Last name" value="Ejaz"
+                    required>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-md-6 mb-3">
+                <label for="validationCustomUsername">Email Address</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="inputGroupPrepend">@</span>
+                    </div>
+                    <input type="text" class="form-control" id="validationCustomUsername" placeholder="Email-Address"
+                        aria-describedby="inputGroupPrepend" required>
+                </div>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="validationCustom03">Phone Number</label>
+                <input type="text" class="form-control" id="validationCustom03" placeholder="Phone Number" required>
+                <div class="invalid-feedback">
+                    Please provide a valid phone-number.
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <button type="button" class="btn btn-dark">Next</button>
+        </div>
+    </form>
+</div>
+
+<script>
+    $(document).ready(function(){
+        $('.dropdown-toggle').dropdown()
+    });
+</script>

@@ -27,7 +27,7 @@
           <td>{{ event.Id }}</td>
           <td>{{ event.Name }}</td>
           <td>{{ event.Description }}</td>
-          <td><i class="fa fa-pencil fa-lg text-primary button mr-3" (click)="editClicked(event)" routerLink='/addevent'></i> <i class="fa fa-minus-circle fa-lg text-danger button" (click)="deleteClicked(event.Id)"></i></td>
+          <td><i class="fa fa-pencil fa-lg text-primary button mr-3" (click)="editClicked(event)" routerLink='/app/event/add'></i> <i class="fa fa-minus-circle fa-lg text-danger button" (click)="deleteClicked(event.Id)"></i></td>
         </tr>
       </tbody>
     </table>

@@ -14,6 +14,7 @@ namespace PlatterFusion.API.Persistence.Interfaces
         TEntity SingleOrDefault(Expression<Func<TEntity, bool>> predicate);
 
         void Add(TEntity entity);
+        TEntity _Add(TEntity entity);
         void AddRange(IEnumerable<TEntity> entities);
 
         void Remove(TEntity entity);

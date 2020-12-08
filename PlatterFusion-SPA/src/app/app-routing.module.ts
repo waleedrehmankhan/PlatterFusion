@@ -1,3 +1,4 @@
+import { OrderCreateComponent } from './order-create/order-create.component';
 import { AuthGuard } from './_guards/auth.guard';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
@@ -46,6 +47,7 @@ const appRoutes: Routes = [
     path: '',
     component: SiteLayoutComponent,
     children: [
+      {path: 'order-create', component: OrderCreateComponent}
     ]
   },
   // Random routes here

@@ -3,57 +3,23 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PlatterFusion.API.Data;
 
 namespace PlatterFusion.API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20201206100022_FewChangesInOrderFormation")]
+    partial class FewChangesInOrderFormation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .UseIdentityColumns()
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.0");
-
-            modelBuilder.Entity("PlatterFusion.API.Model.Address", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
-
-                    b.Property<string>("Country")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("PostCode")
-                        .HasColumnType("int");
-
-                    b.Property<string>("State")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Street")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Suburb")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("apt")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("floor")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("unit")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Address");
-                });
 
             modelBuilder.Entity("PlatterFusion.API.Model.AppUser", b =>
                 {
@@ -166,6 +132,42 @@ namespace PlatterFusion.API.Migrations
                     b.ToTable("Order");
                 });
 
+            modelBuilder.Entity("PlatterFusion.API.Model.OrderAddress", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<string>("Country")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PostCode")
+                        .HasColumnType("int");
+
+                    b.Property<string>("State")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Street")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Suburb")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("apt")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("floor")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("unit")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("OrderAddress");
+                });
+
             modelBuilder.Entity("PlatterFusion.API.Model.OrderDetail", b =>
                 {
                     b.Property<int>("Id")
@@ -267,7 +269,7 @@ namespace PlatterFusion.API.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("PlatterFusion.API.Model.Address", "OrderAddress")
+                    b.HasOne("PlatterFusion.API.Model.OrderAddress", "OrderAddress")
                         .WithMany()
                         .HasForeignKey("OrderAddressId")
                         .OnDelete(DeleteBehavior.Cascade)

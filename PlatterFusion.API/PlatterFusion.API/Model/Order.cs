@@ -11,7 +11,7 @@ namespace PlatterFusion.API.Model
     {
         public int Id { get; set; }
         public Customer Customer { get; set; }
-        public OrderAddress OrderAddress { get; set; }
+        public Address OrderAddress { get; set; }
         public Payment Payment { get; set; }
         public string Message { get; set; }
         public string Status { get; set; }

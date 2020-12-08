@@ -44,6 +44,11 @@ namespace PlatterFusion.API.Persistence.Repositories
             Context.Set<TEntity>().Add(entity);
         }
 
+        public TEntity _Add(TEntity entity)
+        {
+            return Context.Set<TEntity>().Add(entity).Entity;
+        }
+
         public void AddRange(IEnumerable<TEntity> entities)
         {
             Context.Set<TEntity>().AddRange(entities);
