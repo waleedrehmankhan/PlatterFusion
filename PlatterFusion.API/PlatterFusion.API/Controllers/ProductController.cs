@@ -11,6 +11,7 @@ using PlatterFusion.API.Helpers;
 using PlatterFusion.API.Model;
 using PlatterFusion.API.Persistence;
 using PlatterFusion.API.Persistence.Repositories.Product;
+using PlatterFusion.API.Services;
 
 namespace PlatterFusion.API.Controllers
 {
@@ -19,14 +20,16 @@ namespace PlatterFusion.API.Controllers
         #region Configuration
 
         private readonly ILogger<ProductController> _logger;
-        private IUnitOfWork _unitOfWork;
+        private readonly IPhotoService _photoService;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public ProductController(ILogger<ProductController> logger, IUnitOfWork unitOfWork, IMapper mapper)
+        public ProductController(ILogger<ProductController> logger, IUnitOfWork unitOfWork, IMapper mapper, IPhotoService photoService)
         {
             _logger = logger;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _photoService = photoService;
         }
 
         #endregion
@@ -47,7 +50,7 @@ namespace PlatterFusion.API.Controllers
             }
             catch (Exception ex)
             {
-                return this.Content(JsonConvert.SerializeObject(new
+                return this.Content(JsonConvert.SerializeObject(new 
                 {
                     // 0 is Exception
                     msgCode = 0,
@@ -57,14 +60,30 @@ namespace PlatterFusion.API.Controllers
         }
 
         [HttpPost("save")]
-        public async Task<ContentResult> CreateOrUpdate(ProductDto productDto)
+        public async Task<ContentResult> CreateOrUpdate([FromForm] ProductSaveDto productDto)
         {
             ReturnMessage rm = new ReturnMessage(1, "Success");
 
             try
             {
                 var products = await Task.Run(() => _unitOfWork.Products.GetAsync(filter: e => e.Id == productDto.Id));
-                var productToAdd = _mapper.Map<Product>(productDto);
+                //var productToAdd = _mapper.Map<Product>(productDto);
+
+                var productToAdd = new Product { 
+                    Name = productDto.Name,
+                    Description = productDto.Description,
+                    Image = null,
+                    Price = productDto.Price,
+                    isActive = true
+                };
+
+                if (productDto.Picture != null)
+                {
+                    var uploadResult = await _photoService.AddPhotoAsync(productDto.Picture);
+                    if (uploadResult.Error != null) BadRequest(uploadResult.Error.Message);
+
+                    productToAdd.Image = uploadResult.SecureUrl.AbsoluteUri;
+                }
 
                 if (products.Count() == 0)
                 {

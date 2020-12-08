@@ -18,7 +18,7 @@ export class ProductViewComponent implements OnInit {
   }
 
   getProducts() {
-    this.productService.getProducts({ id: 0 }).subscribe( (response: any) => {
+    this.productService.getProducts({ id: 0 }).subscribe((response: any) => {
       this.productArray = response.data.Items;
     });
   }

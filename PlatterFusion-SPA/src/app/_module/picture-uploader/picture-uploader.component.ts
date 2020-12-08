@@ -43,8 +43,7 @@ export class PictureUploaderComponent implements OnInit, ControlValueAccessor {
     }
   }
 
-  // the method set in registerOnChange, it is just 
-  // a placeholder for a method that takes one parameter, 
+  // the method set in registerOnChange, it is just a placeholder for a method that takes one parameter, 
   // we use it to emit changes back to the form
   private propagateChange = (_: any) => { };
 
@@ -82,6 +81,19 @@ export class PictureUploaderComponent implements OnInit, ControlValueAccessor {
       reader.readAsDataURL(file);
     }
   }
+
+  convertImageToBase64(img) {
+  var canvas = document.createElement("canvas");
+  canvas.width = img.width;
+  canvas.height = img.height;
+
+  var ctx = canvas.getContext("2d");
+  ctx.drawImage(img, 0, 0);
+
+  var dataURL = canvas.toDataURL("image/png");
+
+  return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
+}
 
   removeImage() {
     this.innerValue = null;

@@ -18,6 +18,7 @@
           <thead>
             <tr class="text-muted">
               <th>Product ID</th>
+              <th>Image</th>
               <th>Product Name</th>
               <th>Product Description</th>
               <th>Action</th>
@@ -26,6 +27,9 @@
           <tbody>
             <tr *ngFor="let product of productArray">
               <td>{{ product.Id }}</td>
+              <td>
+                <img src="{{product.Image}}" width="200" height="200" class="img-fluid img-thumbnail" alt="">
+              </td>
               <td>{{ product.Name }}</td>
               <td class="text-truncate">{{ product.Description }}</td>
               <td>{{ product.Price }}</td>
@@ -65,4 +69,3 @@
       </div>
       
     </div>
-    

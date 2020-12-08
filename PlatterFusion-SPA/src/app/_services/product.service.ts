@@ -20,6 +20,11 @@ export class ProductService {
   }
 
   saveProduct(model: any) {
-    return this.http.post(this.baseUrl + 'product/save', model);
+    const formData = new FormData();
+    formData.append("Name", model.Name);
+    formData.append("Description", model.Description); 
+    formData.append("Picture", model.Picture); 
+    formData.append("Price", model.Price); 
+    return this.http.post(this.baseUrl + 'product/save', formData);
   }
 }
