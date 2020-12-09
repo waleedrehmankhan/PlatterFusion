@@ -1,23 +1,24 @@
-<div class="container-fluid">
+<div class="container-fluid pt-2 bg-secondary">
   <div class="row">
-    <div class="col-md-5 bg-primary position-fixed h-100">
-      <div class="row pt-2">
-        <div class="col-12">
-          <a href="" class="logo"><img src="/" height="37" alt="Platter fusion"></a>
-        </div>
-      </div>
-      <div class="row row-title h-100">
-        <div class="col-12">
-          <div class="title-wrapper d-block text-center">
-            <h3 class="text-white">Start your order</h3>
-            <p class="text-white">No Hassels</p>
+    <div class="col-md-3 border border-primary position-fixed h-100">
+      <div class="card mb-2">
+        <div class="card-header">
+          <div class="row">
+            <div class="col">
+              <h3 class="d-inline">
+                Fussion Menu
+              </h3>
+            </div>
+            <div class="col-auto">
+              <button tooltip="Manage Industries" class="btn btn-link text-secondary p-0"><i class="fal fa-cog"></i></button>
+            </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="col-md-7 offset-md-5">
-      <div class="row">
-        <div class="col-12">
+    <div class="col-md-9 offset-md-3 border border-light position-fixed h-100">
+      <div class="row d-flex justify-content-md-around">
+        <div class="col-8">
           <form class="form-horizontal" #wizardForm="ngForm" (ngSubmit)="register()" novalidate>
             <ng-container *ngIf="!isSuccess; else successTemplate">
               <div class="form-wrapper">
