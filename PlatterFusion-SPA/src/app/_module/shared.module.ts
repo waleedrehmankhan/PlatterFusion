@@ -1,9 +1,12 @@
+import { MatRadioModule } from '@angular/material/radio';
 import { ToastrModule } from 'ngx-toastr';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PictureUploaderComponent } from './picture-uploader/picture-uploader.component';
 import { Angular2PromiseButtonModule } from 'angular2-promise-buttons';
+import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
+import {MatFormFieldModule} from '@angular/material/form-field';
 
 
 
@@ -36,9 +39,11 @@ import { Angular2PromiseButtonModule } from 'angular2-promise-buttons';
         </div>
       </div>`,
     }),
+    GooglePlaceModule,
+    MatRadioModule
   ],
   exports: [
-    Angular2PromiseButtonModule, PictureUploaderComponent
+    Angular2PromiseButtonModule, PictureUploaderComponent, GooglePlaceModule, MatRadioModule
   ]
 })
 export class SharedModule { }

@@ -1,8 +1,9 @@
+import { ProductDto } from './../_models/productDto';
+import { SizeDto } from './../_models/sizeDto';
 import { SizeService } from './../_services/size.service';
 import { CustomerDto } from './../_models/customerDto';
 import { ProductService } from './../_services/product.service';
 import { Component, OnInit } from '@angular/core';
-import { ProductDto } from '../_models/productDto';
 
 @Component({
   selector: 'order-create',
@@ -13,8 +14,9 @@ export class OrderCreateComponent implements OnInit {
 
   formattedaddress = "";
   productArray: ProductDto[];
-  productSizeArray: any = {};
+  productSizeArray: SizeDto[];
   customerModel: any = {};
+  selectedProduct: any = {};
 
   constructor(private productService: ProductService, private sizeService: SizeService) { }
 
@@ -36,6 +38,7 @@ export class OrderCreateComponent implements OnInit {
   getProducts() {
     this.productService.getProducts({ id: 0 }).subscribe((response: any) => {
       this.productArray = response.data.Items;
+      console.log(this.productArray);
     });
   }
 
@@ -45,6 +48,10 @@ export class OrderCreateComponent implements OnInit {
       this.productSizeArray = response.data.Items;
       console.log(this.productSizeArray);
     });
+  }
+
+  loadProduct(model: any) {
+    this.selectedProduct = model;
   }
 
   show() {
