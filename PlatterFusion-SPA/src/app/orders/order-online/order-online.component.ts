@@ -1,6 +1,6 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { WizardComponent } from 'angular-archwizard';
 import { ProductDto } from '../../_models/productDto';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ProductService } from '../../_services/product.service';
 
 @Component({

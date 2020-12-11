@@ -1,3 +1,4 @@
+import { ArchwizardModule } from 'angular-archwizard';
 import { MatRadioModule } from '@angular/material/radio';
 import { ToastrModule } from 'ngx-toastr';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
@@ -7,6 +8,7 @@ import { PictureUploaderComponent } from './picture-uploader/picture-uploader.co
 import { Angular2PromiseButtonModule } from 'angular2-promise-buttons';
 import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
 import {MatFormFieldModule} from '@angular/material/form-field';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -40,10 +42,18 @@ import {MatFormFieldModule} from '@angular/material/form-field';
       </div>`,
     }),
     GooglePlaceModule,
-    MatRadioModule
+    MatRadioModule,
+    ReactiveFormsModule,
+    ArchwizardModule
+
   ],
   exports: [
-    Angular2PromiseButtonModule, PictureUploaderComponent, GooglePlaceModule, MatRadioModule
+    Angular2PromiseButtonModule, 
+    PictureUploaderComponent, 
+    GooglePlaceModule, 
+    MatRadioModule,
+    ReactiveFormsModule,
+    ArchwizardModule
   ]
 })
 export class SharedModule { }
