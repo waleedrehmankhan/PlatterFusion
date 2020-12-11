@@ -20,6 +20,7 @@ import { EventsModule } from './events/events.module';
 import { ErrorComponent } from './error/error.component';
 import { ProductModule } from './product/product.module';
 import { OrderCreateComponent } from './order-create/order-create.component';
+import { GooglePlaceModule } from "ngx-google-places-autocomplete";
 
 @NgModule({
   declarations: [

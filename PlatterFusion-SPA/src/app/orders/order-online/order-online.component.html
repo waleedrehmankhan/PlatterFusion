@@ -1,0 +1,105 @@
+<div class="container-fluid pt-2 mt-5 bg-secondary">
+  <div class="row">
+    <div class="col-md-3 border border-light position-fixed h-100">
+      <div class="card">
+        <div class="card-header">
+          <div class="row">
+            <div class="col">
+              <h3 class="d-inline">
+                Fussion Menu
+              </h3>
+            </div>
+            <div class="col-auto">
+              <button tooltip="Manage Industries" class="btn btn-link text-secondary p-0"><i class="fal fa-cog"></i></button>
+            </div>
+          </div>
+            <ul class="list-group list-group-flush mt-2" *ngFor="let product of productArray">
+              <li class="list-group-item"><a (click)="onProductSelect(product.Id)">{{product.Name}}</a></li>
+            </ul>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-7 offset-md-3 border border-light position-fixed h-100">
+      <div class="row d-flex justify-content-md-around">
+        <div class="col-8 offset-right">
+          <form class="form-horizontal" #wizardForm="ngForm" (ngSubmit)="register()" novalidate>
+            <ng-container *ngIf="!isSuccess; else successTemplate">
+              <div class="form-wrapper">
+                <aw-wizard #startupwizard class="aw-wizard-wrap" navBarLayout="large-empty">
+                  <aw-wizard-step (stepEnter)="currentStep = 0" stepTitle="" [navigationSymbol]="">
+                    <!--Step 1-->
+                    <div class="form-group">
+                      <div class="card" style="width: 16rem;">
+                        <img class="card-img-top" src="{{productSelected.Image}}" alt="Card image cap">
+                        <div class="card-body">
+                          <h5 class="card-title">{{productSelected.Name}}</h5>
+                          <p class="card-text">{{productSelected.Description}}</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <button (click)="onNextStep(1)" class="btn btn-secondary btn-block" type="button">Save & Continue</button>
+                    </div>
+                  </aw-wizard-step>
+
+                  <aw-wizard-step (stepEnter)="currentStep = 1" stepTitle="" [navigationSymbol]="">
+                    <div class="row mb-3">
+                      <div class="col-2"><button type="button" (click)="onPrevStep(0)" class="btn btn-link p-0"> Go Back </button></div>
+                      <div class="col-8"><h4 class="text-dark text-center font-weight-bold">Tell Us About Yourself</h4></div>
+                      <div class="col-2"></div>
+                    </div>
+                    <!--Step 2-->
+                    <h3>Step 2</h3>
+                    <div class="form-group mt-3">
+                      <button (click)="onNextStep(2)" class="btn btn-secondary btn-block" type="button">Save & Continue</button>
+                    </div>
+                  </aw-wizard-step>
+
+                  <aw-wizard-step (stepEnter)="currentStep = 2" stepTitle="" [navigationSymbol]="">
+                    <div class="row mb-3">
+                      <div class="col-2"><button type="button" (click)="onPrevStep(1)" class="btn btn-link p-0"> Go Back </button></div>
+                      <div class="col-8"><h4 class="text-dark text-center font-weight-bold">Choose product</h4></div>
+                      <div class="col-2"></div>
+                    </div>
+                    <!--Step 3-->
+                    <h3>Step 3</h3>
+                    <div class="form-group mt-3">
+                      <button (click)="onNextStep(3)" class="btn btn-secondary btn-block" type="button">Save & Continue</button>
+                    </div>
+                  </aw-wizard-step>
+
+                  <aw-wizard-step stepTitle="" [navigationSymbol]="">
+                    <div class="row mb-3">
+                      <div class="col-2"><button type="button" (click)="onPrevStep(2)" class="btn btn-link p-0"> Go Back </button></div>
+                      <div class="col-8"><h4 class="text-dark text-center font-weight-bold">Card pay</h4></div>
+                      <div class="col-2"></div>
+                    </div>
+                    <!--Step 4-->
+                    <h3>Step 4</h3>
+                    <div class="form-group mt-3">
+                      <button class="btn btn-secondary btn-block" [promiseBtn]="isLoading" type="submit">Try it For Free</button>
+                    </div>
+                  </aw-wizard-step>
+                </aw-wizard>
+              </div>
+            </ng-container>
+            <ng-template #successTemplate>
+              <div class="container vertical-center">
+                <div class="jumbotron bg-white text-center mx-auto">
+                  <div class="icon-wrap-lg d-table p-1 bg-light rounded-circle mx-auto">
+                    <span class="d-table-cell align-middle"><img src="/" width="100" height="70" /></span>
+                  </div>
+                  <h3 class="mt-2">Welcome To Platter Fusion</h3>
+                  <h6 class="text-primary">We're Excited To Have You On Board!</h6>
+                  <p class="mt-2" style="font-size: 0.875rem;">Your order has been placed, <br /> click on the <a href="">link</a> to track your order.</p>
+                  <a [routerLink]="['/login']" class="btn btn-secondary">Your Account</a>
+                </div>
+              </div>
+            </ng-template>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-2 offset-md-10 border border-light position-fixed h-100"></div>
+  </div>
+</div>
