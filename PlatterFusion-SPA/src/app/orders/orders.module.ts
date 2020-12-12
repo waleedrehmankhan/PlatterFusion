@@ -15,7 +15,6 @@ import { FormsModule } from '@angular/forms';
     CommonModule,
     FormsModule,
     OrdersRoutingModule,
-    ArchwizardModule,
     SharedModule
   ]
 })
