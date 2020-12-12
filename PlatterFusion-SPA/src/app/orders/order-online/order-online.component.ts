@@ -1,4 +1,5 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { WizardComponent } from 'angular-archwizard';
 import { ProductDto } from '../../_models/productDto';
 import { ProductService } from '../../_services/product.service';
@@ -15,15 +16,40 @@ export class OrderOnlineComponent implements OnInit {
   productSelected: ProductDto = new ProductDto();
   isSuccess: boolean = false;
   isLoading: any;
-
-  constructor(private productService: ProductService) { }
+  closeResult = ''; 
+  constructor(private productService: ProductService, private modalService: NgbModal) { }
 
   ngOnInit(): void {
     this.getProducts();
+    this.onProductSelect(5 as any);
   }
 
   @ViewChild("startupwizard", { static: false })
   public wizard: WizardComponent;
+
+
+  open(content) {
+    this.modalService.open(content,
+      { ariaLabelledBy: 'modal-basic-title' }).result.
+      then((result) => {
+
+        this.closeResult = `Closed with: ${result}`;
+      }, (reason) => {
+        this.closeResult =
+          `Dismissed ${this.getDismissReason(reason)}`;
+      });
+  }
+
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
+  } 
+
 
   onNextStep(index: number) {
     switch (index) {

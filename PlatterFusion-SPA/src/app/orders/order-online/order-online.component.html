@@ -13,19 +13,22 @@
               <button tooltip="Manage Industries" class="btn btn-link text-secondary p-0"><i class="fal fa-cog"></i></button>
             </div>
           </div>
-            <ul class="list-group list-group-flush mt-2" *ngFor="let product of productArray">
-              <li class="list-group-item"><a (click)="onProductSelect(product.Id)">{{product.Name}}</a></li>
-            </ul>
+          <ul class="list-group list-group-flush mt-2" *ngFor="let product of productArray">
+            <li class="list-group-item"><a class="btn btn-link" (click)="onProductSelect(product.Id)">{{product.Name}}</a></li>
+          </ul>
         </div>
       </div>
     </div>
+
     <div class="col-md-7 offset-md-3 border border-light position-fixed h-100">
       <div class="row d-flex justify-content-md-around">
         <div class="col-8 offset-right">
+
           <form class="form-horizontal" #wizardForm="ngForm" (ngSubmit)="register()" novalidate>
             <ng-container *ngIf="!isSuccess; else successTemplate">
               <div class="form-wrapper">
                 <aw-wizard #startupwizard class="aw-wizard-wrap" navBarLayout="large-empty">
+
                   <aw-wizard-step (stepEnter)="currentStep = 0" stepTitle="" [navigationSymbol]="">
                     <!--Step 1-->
                     <div class="form-group">
@@ -33,7 +36,7 @@
                         <img class="card-img-top" src="{{productSelected.Image}}" alt="Card image cap">
                         <div class="card-body">
                           <h5 class="card-title">{{productSelected.Name}}</h5>
-                          <p class="card-text">{{productSelected.Description}}</p>
+                          <p class="card-text">{{productSelected.Description}} <a (click)="open(content)"><i class="fa fa-plus float-right"></i></a> </p>
                         </div>
                       </div>
                     </div>
@@ -43,12 +46,12 @@
                   </aw-wizard-step>
 
                   <aw-wizard-step (stepEnter)="currentStep = 1" stepTitle="" [navigationSymbol]="">
+                    <!--Step 2-->
                     <div class="row mb-3">
                       <div class="col-2"><button type="button" (click)="onPrevStep(0)" class="btn btn-link p-0"> Go Back </button></div>
                       <div class="col-8"><h4 class="text-dark text-center font-weight-bold">Tell Us About Yourself</h4></div>
                       <div class="col-2"></div>
                     </div>
-                    <!--Step 2-->
                     <h3>Step 2</h3>
                     <div class="form-group mt-3">
                       <button (click)="onNextStep(2)" class="btn btn-secondary btn-block" type="button">Save & Continue</button>
@@ -69,12 +72,12 @@
                   </aw-wizard-step>
 
                   <aw-wizard-step stepTitle="" [navigationSymbol]="">
+                    <!--Step 4-->
                     <div class="row mb-3">
                       <div class="col-2"><button type="button" (click)="onPrevStep(2)" class="btn btn-link p-0"> Go Back </button></div>
                       <div class="col-8"><h4 class="text-dark text-center font-weight-bold">Card pay</h4></div>
                       <div class="col-2"></div>
                     </div>
-                    <!--Step 4-->
                     <h3>Step 4</h3>
                     <div class="form-group mt-3">
                       <button class="btn btn-secondary btn-block" [promiseBtn]="isLoading" type="submit">Try it For Free</button>
@@ -103,3 +106,23 @@
     <div class="col-md-2 offset-md-10 border border-light position-fixed h-100"></div>
   </div>
 </div>
+<ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title">
+        Geeks of Geeks
+      </h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true"> × </span>
+      </button>
+    </div>
+    <div class="modal-body">
+      Hi
+    </div>
+    <div class="modal-footer">
+      <button type="button"
+              class="btn btn-outline-dark"
+              (click)="modal.close('Save click')">
+        Save
+      </button>
+    </div>
+</ng-template>

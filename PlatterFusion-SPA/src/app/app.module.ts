@@ -21,6 +21,7 @@ import { ErrorComponent } from './error/error.component';
 import { ProductModule } from './product/product.module';
 import { OrderCreateComponent } from './order-create/order-create.component';
 import { GooglePlaceModule } from "ngx-google-places-autocomplete";
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { GooglePlaceModule } from "ngx-google-places-autocomplete";
     BrowserModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
-    GooglePlaceModule
+    GooglePlaceModule,
+    NgbModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },

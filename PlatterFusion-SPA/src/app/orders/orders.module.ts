@@ -15,7 +15,7 @@ import { FormsModule } from '@angular/forms';
     CommonModule,
     FormsModule,
     OrdersRoutingModule,
-    ArchwizardModule,
+    ArchwizardModule
   ]
 })
 export class OrdersModule { }
