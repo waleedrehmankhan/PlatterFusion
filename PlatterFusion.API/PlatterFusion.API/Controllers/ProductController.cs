@@ -11,6 +11,7 @@ using PlatterFusion.API.Helpers;
 using PlatterFusion.API.Model;
 using PlatterFusion.API.Persistence;
 using PlatterFusion.API.Persistence.Repositories.Product;
+using PlatterFusion.API.Persistence.Repositories.Size;
 using PlatterFusion.API.Services;
 
 namespace PlatterFusion.API.Controllers
@@ -33,6 +34,10 @@ namespace PlatterFusion.API.Controllers
         }
 
         #endregion
+
+
+        
+
 
         [HttpPost("all")]
         public async Task<ContentResult> GetAll(GetProductInput input)
@@ -137,6 +142,30 @@ namespace PlatterFusion.API.Controllers
                 rm.msg = ex.Message.ToString();
                 rm.msgCode = 0;
                 return this.Content(rm.returnMessage(null));
+            }
+        }
+
+        [HttpPost("sizes")]
+        public async Task<ContentResult> GetSize(GetSizeInput input)
+        {
+            try
+            {
+                ReturnMessage rm = new ReturnMessage(1, "Success");
+                var sizes = await Task.Run(() => _unitOfWork.Size.GetAsync(filter: s => input.Id != 0 ? (s.Id == input.Id) : true));
+                var sizesToReturn = _mapper.Map<IEnumerable<SizeDto>>(sizes);
+
+                return this.Content(rm.returnMessage(new PagedResultDto<SizeDto>
+                    (sizesToReturn.AsQueryable(), input.pagenumber, input.pagesize)),
+                    "application/json");
+            }
+            catch (Exception ex)
+            {
+                return this.Content(JsonConvert.SerializeObject(new
+                {
+                    // 0 is Exception
+                    msgCode = 0,
+                    msg = ex.Message
+                }), "application/json");
             }
         }
     }
