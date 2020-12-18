@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 import { ToastrService } from 'ngx-toastr';
 import { ProductDto } from '../../_models/productDto';
 import { ProductService } from '../../_services/product.service';
@@ -11,7 +12,7 @@ import { ProductService } from '../../_services/product.service';
 export class ProductViewComponent implements OnInit {
   productArray: ProductDto[];
 
-  constructor(private productService: ProductService, private toastr: ToastrService) { }
+  constructor(private productService: ProductService, private toastr: ToastrService, private sanitizer: DomSanitizer) { }
 
   ngOnInit(): void {
     this.getProducts();
@@ -24,7 +25,7 @@ export class ProductViewComponent implements OnInit {
   }
 
   editClicked($data) {
-    console.log($data);
+    this.productService.changeMessage($data);
   }
 
   deleteClicked(data) {
@@ -42,5 +43,4 @@ export class ProductViewComponent implements OnInit {
       }
     }
   }
-
 }

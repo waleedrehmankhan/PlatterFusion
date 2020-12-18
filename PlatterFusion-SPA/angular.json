@@ -30,14 +30,15 @@
             },
             "styles": [
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
-              "./node_modules/bootstrap/dist/css/bootstrap.min.css",
               "./node_modules/ngx-bootstrap/datepicker/bs-datepicker.css",
               "./node_modules/font-awesome/css/font-awesome.css",
               "./node_modules/ngx-toastr/toastr.css",
               "src/styles.css",
               "src/loader.scss"
             ],
-            "scripts": []
+            "scripts": [
+              "./node_modules/json-form-data/dist/jsonToFormData.min.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -109,7 +110,9 @@
               "src/assets/sb-admin-2.min.css",
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [
+              "./node_modules/json-form-data/dist/jsonToFormData.min.js"
+            ]
           }
         },
         "lint": {

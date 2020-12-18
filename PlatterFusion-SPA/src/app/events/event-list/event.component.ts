@@ -12,9 +12,8 @@ import { Subject } from 'rxjs';
   styleUrls: ['./event.component.css'],
 })
 export class EventComponent implements OnInit {
-
   eventArray: EventDto[];
-  currentEvent: EventBindingModel =  new EventBindingModel();
+  currentEvent: EventBindingModel = new EventBindingModel();
 
   constructor(
     private eventService: EventService,

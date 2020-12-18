@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { Subscription } from 'rxjs';
+import { first } from 'rxjs/operators';
 import { EventService } from "src/app/_services/event.service";
+import { AddEventBindingModel } from '../../_models/eventDto';
 
 @Component({
   selector: 'app-add-event',
@@ -9,19 +12,21 @@ import { EventService } from "src/app/_services/event.service";
   styleUrls: ['./add-event.component.css'],
 })
 export class AddEventComponent implements OnInit {
-  model: any = {};
+
+  model: AddEventBindingModel = new AddEventBindingModel();
   validationErrors: string[] = [];
   promiseSetBySomeAction: any;
+  subscription: Subscription;
+
   constructor(
     private eventService: EventService,
     private toastr: ToastrService,
     private router: Router
-  ) {}
-
+    ) {}
+  
   ngOnInit() {
-    this.eventService.currentMessage.subscribe((response: any) => {
-      if (response != '')
-      this.model = response;
+    this.subscription = this.eventService.currentMessage.pipe(first()).subscribe((response: any) => {
+      if (response != '') this.model = response;
     });
   }
 
@@ -33,10 +38,8 @@ export class AddEventComponent implements OnInit {
       this.validationErrors = error;
     });
   }
-}
 
-class AddEventBindingModel {
-  Id: number;
-  Name: string;
-  Description: string;
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
 }

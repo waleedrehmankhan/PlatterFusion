@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, EMPTY } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -11,11 +11,15 @@ export class EventService {
 
   private messageSource = new BehaviorSubject('');
   currentMessage = this.messageSource.asObservable();
-
+  
   constructor(private http: HttpClient) { }
-
+  
   changeMessage(message: string) {
     this.messageSource.next(message)
+
+    setTimeout(() => {
+      this.messageSource.next('');
+    }, 100);
   }
 
   getEvents(model: any) {

@@ -1,14 +1,14 @@
 <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
-    <h5 class="my-0 mr-md-auto font-weight-normal pointer" routerLink='/app'>Platter Fusion</h5>
-    <nav class="my-2 my-md-0 mr-md-3">
-      <a class="p-2 text-dark" routerLink='/app/event/view'>Events</a>
-      <a class="p-2 text-dark" routerLink='/app/product/view'>Products</a>
-      <a class="p-2 text-dark" routerLink='/app/order/view'>Orders</a>
-    </nav>
-    <div class="dropdown text-dark" *ngIf="accountService.currentUser$ | async" dropdown>
-      <a class="dropdown-toggle text-dark ml-2" dropdownToggle>Welcome {{ user.username }}</a>
-      <div class="dropdown-menu mt-3" *dropdownMenu>
-          <a class="dropdown-item" (click)="logout()" >Logout</a>
-      </div>
-  </div>
-  </div>
+  <h5 class="my-0 mr-md-auto font-weight-normal pointer" routerLink='/app'>Platter Fusion</h5>
+  <nav class="my-2 my-md-0 mr-md-3">
+    <a class="p-2 text-dark" routerLink='/app/event/view'>Events</a>
+    <a class="p-2 text-dark" routerLink='/app/product/view'>Products</a>
+    <a class="p-2 text-dark" routerLink='/app/order/view'>Orders</a>
+  </nav>
+    <button class="btn btn-link dropdown-toggle text-dark" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      Welcome {{ user.username }}
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+      <a class="dropdown-item" href="#" (click)="logout()">Logout</a>
+    </div>
+</div>

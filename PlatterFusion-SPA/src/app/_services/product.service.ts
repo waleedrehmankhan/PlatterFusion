@@ -1,6 +1,7 @@
 import { environment } from './../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 
 @Injectable({
@@ -9,7 +10,18 @@ import { Injectable } from '@angular/core';
 export class ProductService {
   baseUrl = environment.apiUrl;
 
+  private messageSource = new BehaviorSubject('');
+  currentMessage = this.messageSource.asObservable();
+
   constructor(private http: HttpClient) { }
+
+  changeMessage(message: string) {
+    this.messageSource.next(message);
+
+    setTimeout(() => {
+      this.messageSource.next('');
+    }, 100);
+  }
 
   getProducts(model: any) {
     return this.http.post(this.baseUrl + 'product/all', model);
@@ -19,12 +31,7 @@ export class ProductService {
     return this.http.post(this.baseUrl + 'product/delete', model);
   }
 
-  saveProduct(model: any) {
-    const formData = new FormData();
-    formData.append("Name", model.Name);
-    formData.append("Description", model.Description); 
-    formData.append("Picture", model.Picture); 
-    formData.append("Price", model.Price); 
-    return this.http.post(this.baseUrl + 'product/save', formData);
+  saveProduct(data: FormData): Observable<any>  {
+    return this.http.post<any>(this.baseUrl + 'product/save', data);
   }
 }

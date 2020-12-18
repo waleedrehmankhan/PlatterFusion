@@ -11,10 +11,10 @@ namespace PlatterFusion.API.Dtos
         public string Name { get; set; }
         [Required]
         public string Description { get; set; }
-        public string Image { get; set; }
+        public string Picture { get; set; }
         [Required]
         public float Price { get; set; }
-        public bool isActive { get; set; }
+        //public bool isActive { get; set; }
     }
 
     public class ProductSaveDto {
@@ -24,8 +24,8 @@ namespace PlatterFusion.API.Dtos
         [Required]
         public string Description { get; set; }
         public IFormFile Picture { get; set; }
+        public int IsPictureChanged { get; set; }
         [Required]
         public float Price { get; set; }
-        public bool isActive { get; set; }
     }
 }

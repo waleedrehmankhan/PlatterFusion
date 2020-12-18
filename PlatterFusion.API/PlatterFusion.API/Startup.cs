@@ -42,6 +42,7 @@ namespace PlatterFusion.API
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddCors();
             services.AddControllers();
+            services.AddHttpContextAccessor();
             services.AddIdentityServices(_config);
             
         }

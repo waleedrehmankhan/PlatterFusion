@@ -28,13 +28,13 @@
             <tr *ngFor="let product of productArray">
               <td>{{ product.Id }}</td>
               <td>
-                <img src="{{ product.Image }}" width="200" height="200" class="img-fluid img-thumbnail" alt="{{ product.Name }}">
+                <img *ngIf="product.Picture" src= "{{ product.Picture }}" width="200" height="200" class="img-fluid img-thumbnail" alt="{{ product.Name }}">
               </td>
               <td>{{ product.Name }}</td>
               <td class="text-truncate">{{ product.Description }}</td>
               <td>{{ product.Price }}</td>
               <td>
-                <i class="fa fa-pencil fa-lg text-primary button mr-3" (click)="editClicked(product.Id)"></i> 
+                <i class="fa fa-pencil fa-lg text-primary button mr-3" (click)="editClicked(product)" routerLink='/app/product/add'></i> 
                 <i class="fa fa-minus-circle fa-lg text-danger button" (click)="deleteClicked(product.Id)"></i>
               </td>
             </tr>

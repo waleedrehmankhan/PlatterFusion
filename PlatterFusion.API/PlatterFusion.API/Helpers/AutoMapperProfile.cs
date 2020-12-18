@@ -14,7 +14,7 @@ namespace PlatterFusion.API.Helpers
         {
             // Domain to Dto
             CreateMap<Event, EventDto>();
-            CreateMap<Product, ProductDto>();
+            CreateMap<Product, ProductDto>().ForMember(x => x.Picture, scr => scr.MapFrom(x => x.Image)); ;
 
             CreateMap<Size, SizeDto>();
 

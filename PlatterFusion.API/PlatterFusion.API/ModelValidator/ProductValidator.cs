@@ -14,7 +14,7 @@ namespace PlatterFusion.API.ModelValidator
             RuleFor(x => x.Name).NotNull().NotEmpty();
             RuleFor(x => x.Description).NotNull().NotEmpty();
             RuleFor(x => x.Price).NotNull().NotEmpty();
-            RuleFor(x => x.isActive).Must(x => x == false || x == true);
+            //RuleFor(x => x.isActive).Must(x => x == false || x == true);
         }
     }
 }

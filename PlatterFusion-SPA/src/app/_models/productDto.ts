@@ -2,7 +2,7 @@ export class ProductDto {
   Id: number;
   Name: string;
   Description: string;
-  Image: string;
+  Picture: string;
   Price: number;
-  isActive: boolean;
+  isPictureChanged: number;
 }
