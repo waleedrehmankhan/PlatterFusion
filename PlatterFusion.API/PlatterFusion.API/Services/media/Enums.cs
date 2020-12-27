@@ -15,5 +15,13 @@ namespace PlatterFusion.API.Services.media
             Thumbnail
         }
 
+        public enum ServiceStatus
+        {
+            Success,
+            Error,
+            Exception,
+            Unautorize
+        }
+
     }
 }

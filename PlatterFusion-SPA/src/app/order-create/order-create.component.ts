@@ -12,11 +12,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class OrderCreateComponent implements OnInit {
 
-  formattedaddress = "";
+  formattedaddress = "";  
   productArray: ProductDto[];
   productSizeArray: SizeDto[];
   customerModel: any = {};
   selectedProduct: any = {};
+  //latitude: number;
+  //longitude: number;
 
   constructor(private productService: ProductService, private sizeService: SizeService) { }
 
@@ -31,8 +33,14 @@ export class OrderCreateComponent implements OnInit {
     }
   }
   public AddressChange(address: any) {
-    //setting address from API to local variable 
-    this.formattedaddress = address.formatted_address
+    //setting address from API to local variable
+    debugger;
+    this.formattedaddress = address.formatted_address;
+    //if (address.geometry !== undefined || address.geometry !== null) {
+    //  debugger;
+    //  this.latitude = address.geometry.location.lat();
+    //  this.longitude = address.geometry.location.lng();
+    //};
   }
 
   getProducts() {

@@ -68,4 +68,20 @@ namespace PlatterFusion.API.Dtos
         public string Status { get; set; }
     }
 
+    public class PaymentCreateBindingModel
+    {
+        public decimal Amount { get; set; }
+
+        private string _email;
+
+        public string Email
+        {
+            get { return _email; }
+            set { _email = value?.ToLower(); }
+        }
+        public string CardholderName { get; set; }
+
+        public string StripeToken { get; set; }
+
+    }
 }

@@ -37,7 +37,7 @@
               "src/loader.scss"
             ],
             "scripts": [
-              "./node_modules/json-form-data/dist/jsonToFormData.min.js"
+              "./node_modules/json-form-data/dist/jsonToFormData.min.js",
             ]
           },
           "configurations": {

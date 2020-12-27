@@ -14,6 +14,7 @@ declare let window: any;
   styleUrls: ['./product-add.component.css']
 })
 export class ProductAddComponent implements OnInit {
+
   model: ProductDto = new ProductDto();
   validationErrors: string[] = [];
   subscription: Subscription;

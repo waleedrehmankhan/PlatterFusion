@@ -51,6 +51,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
+     
   ],
   bootstrap: [AppComponent]
 })

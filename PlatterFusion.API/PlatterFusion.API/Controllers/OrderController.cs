@@ -7,10 +7,12 @@ using PlatterFusion.API.Helpers;
 using PlatterFusion.API.Model;
 using PlatterFusion.API.Persistence;
 using PlatterFusion.API.Persistence.Repositories.Order;
+using PlatterFusion.API.Services.Payments;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using static PlatterFusion.API.Services.media.Enums;
 
 namespace PlatterFusion.API.Controllers
 {
@@ -21,12 +23,14 @@ namespace PlatterFusion.API.Controllers
         private readonly ILogger<OrderController> _logger;
         private IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        private readonly IStripeService _stripeService;
 
-        public OrderController(ILogger<OrderController> logger, IUnitOfWork unitOfWork, IMapper mapper)
+        public OrderController(ILogger<OrderController> logger, IStripeService stripeService, IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _logger = logger;
+            _stripeService = stripeService;
         }
 
         #endregion
@@ -95,5 +99,41 @@ namespace PlatterFusion.API.Controllers
 
         }
 
+
+
+        [HttpPost("addpayment")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
+        [ProducesResponseType(500)]
+        public async Task<IActionResult> AddPayment(PaymentCreateBindingModel data)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            try
+            {
+
+                var result = await _stripeService.ProcessPayment(data);
+
+                if (result.Item1.ServiceStatus == ServiceStatus.Error)
+                {
+                    foreach (var error in result.Item1.Errors)
+                    {
+                        ModelState.AddModelError(error.Item1, error.Item2);
+                    }
+                    return BadRequest(ModelState);
+                }
+                else
+                    return Ok(result.Item2);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        
     }
 }

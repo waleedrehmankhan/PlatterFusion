@@ -2,18 +2,21 @@ import { environment } from './../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-
+import { BaseService } from 'shared/services/base.service';
+import { catchError, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ProductService {
+export class ProductService extends BaseService {
   baseUrl = environment.apiUrl;
 
   private messageSource = new BehaviorSubject('');
   currentMessage = this.messageSource.asObservable();
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+      super();
+  }
 
   changeMessage(message: string) {
     this.messageSource.next(message);
@@ -24,7 +27,8 @@ export class ProductService {
   }
 
   getProducts(model: any) {
-    return this.http.post(this.baseUrl + 'product/all', model);
+    return this.http.post(this.baseUrl + 'product/all', model)
+      .pipe(tap(c => c), catchError(this.errorHandler));;
   }
 
   deleteProduct(model: any) {

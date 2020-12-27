@@ -1,0 +1,199 @@
+<div class="container-fluid">
+  <div class="row mt-5">
+    <div class="col-md-12">
+      <form class="form-horizontal" #wizardForm="ngForm" (ngSubmit)="addOrder(wizardForm)" novalidate>
+        <div class="form-wrapper">
+          <div class="row">
+            <div class="col-md-3 border-top border-bottom border-dark">
+              <div class="card" style="width:23rem;">
+                <div class="card-header">
+                  <div class="row">
+                    <div class="col">
+                      <h3 class="d-inline">
+                        Fussion Menu
+                      </h3>
+                    </div>
+                    <div class="col-auto">
+                      <button tooltip="Manage Industries" class="btn btn-link text-secondary p-0"><i class="fa fa-cog"></i></button>
+                    </div>
+                  </div>
+                  <ul class="list-group list-group-flush mt-2" *ngFor="let product of productArray">
+                    <li class="list-group-item"><a class="btn btn-link" (click)="onProductSelect(product.Id)">{{product.Name}}</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 border-top border-bottom border-dark">
+              <div class="row d-flex justify-content-md-center">
+                <div class="col-10">
+                  <div class="center">
+                    <h6 class="mt-2"><b>The Ultimate Cheese Graze</b></h6><hr width="35%">
+                  </div>
+                  <div class="form-group">
+                    <div class="card mt-5" style="width: 16rem;">
+                      <!--<img class="card-img-top" src="{{productSelected.Image}}" alt="Card image cap">-->
+                      <img class="card-img-top" src="https://i.ndtvimg.com/i/2018-03/french-desserts_620x350_51520851425.jpg" alt="Card image cap">
+                      <div class="card-body">
+                        <h5 class="card-title">{{productSelected.Name}}  <b>${{productSelected.Price}}</b></h5>
+                        <p class="card-text">{{productSelected.Description}} <a (click)="openModal(templateProduct)"><i class="fa fa-plus float-right"></i></a> </p>
+                        <div *ngIf="isAddedToMyOrder">
+                          <p style="color:red">Please add product details.</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group mt-5">
+                    <button type="submit" class="btn btn-secondary btn-block" >Save & Continue</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3 d-flex border-top border-bottom border-dark">
+              <div class="ml-auto">
+                <div class="card" style="width: 20rem;">
+                  <div class="card-body">
+                    <div class="row mt-2">
+                      <div class="col">
+                        <p class="pull-left"><b>My Order</b></p>
+                      </div>
+                      <div class="col">
+                        <p class="pull-right"><b>({{items}} items)</b></p>
+                      </div>
+                    </div>
+                    <hr />
+                    <div class="row">
+                      <div class="col">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT7gINamLofpwTHDF0eJ47e3_xvaAq_OOrJ2A&usqp=CAU" class="img-fluid" alt="Responsive image">
+                      </div>
+                    </div>
+                    <hr style="border: solid 1px" />
+                    <div class="row">
+                      <div class="col">
+                        <p class="pull-left"><b>Subtotal</b></p>
+                      </div>
+                      <div class="col">
+                        <p class="pull-right"><b>${{subtotal}}</b></p>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col">
+                        <p class="pull-left"><b>Delivery</b></p>
+                      </div>
+                      <div class="col">
+                        <p class="pull-right"><b>from ${{delivery}}</b></p>
+                      </div>
+                    </div>
+                    <hr />
+                    <ng-container *ngIf="requestDiv">
+                      <div class="row">
+                        <div class="btn btn-link nounderline" (click)="requestDiv = !requestDiv;">
+                          <i class="fa fa-plus"></i>&nbsp;Special requests
+                        </div>
+                      </div>
+                    </ng-container>
+                    <div class="row">
+                      <div class="col">
+                        <div class="form-group">
+                          <div *ngIf="!requestDiv"><input class="form-control" placeholder="Special requests" type="text" name="request" [(ngModel)]="model.Request" /></div>
+                        </div>
+                      </div>
+                    </div>
+                    <hr />
+                    <div *ngIf="isDateTimeSubmitted && wizardForm.invalid">
+                      <p style="color:red">Please enter delivery Date & Time.</p>
+                    </div>
+                    <div class="row">
+                      <div class="col">
+                        <b>Delivery Time</b>&nbsp;<i class="fa fa-angle-down"></i>
+                        <div class="form-group mt-2">
+                          <timepicker name="timepicker" [(ngModel)]="model.time" required></timepicker>
+                        </div>
+                      </div>
+                      <div class="col">
+                      </div>
+                    </div>
+                    <div class="row mt-2">
+                      <div class="col-8">
+                        <div class="form-group">
+                          <b>Delivery Date</b>&nbsp;<i class="fa fa-angle-down"></i>
+                          <input class="form-control mt-2" placeholder="Enter date" name="datepicker" placement="top" bsDatepicker [minDate]="today" [daysDisabled]="[6,0]" [(ngModel)]="model.date" required />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<ng-template #templateProduct>
+  <div class="modal-body">
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <p class="font-weight-bold pull-left">Product Details</p>
+        </div>
+        <div class="col">
+          <a (click)="modalRef.hide()"><i class="fa fa-times float-right"></i></a>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <img src="https://i.ndtvimg.com/i/2018-03/french-desserts_620x350_51520851425.jpg" class="img-fluid" alt="Responsive image">
+          <p class="font-weight-bold">{{productSelected.Name}}</p>
+          <p class="font-weight-normal">{{productSelected.Description}}</p>
+        </div>
+        <div class="col">
+          <form #productDetailForm="ngForm" (ngSubmit)="addToMyOrder(productDetailForm)" novalidate>
+            <p><b>Size</b><br />Choose one</p>
+            <hr />
+            <div class="form-group form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="radio" value="small" [(ngModel)]="model.Size" required>
+              <label class="form-check-label"> Small(Feeds 1-2) </label>
+            </div>
+            <div class="form-group form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="radio" value="medium" [(ngModel)]="model.Size" required>
+              <label class="form-check-label"> Medium(Feeds 4-6)<b> +$20</b></label>
+            </div>
+            <div class="form-group form-check">
+              <input class="form-check-input" type="radio" name="radio" value="large" [(ngModel)]="model.Size" required>
+              <label class="form-check-label"> Large(Feeds 6-10)<b> +$40</b></label>
+            </div>
+            <div *ngIf="!isSubmitted && productDetailForm.invalid">
+              <p style="color:red">Please select either value</p>
+            </div>
+
+            <hr />
+            <p class="font-weight-bold mt-2">Personalized</p>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" name="checkbox" value="personalized" [(ngModel)]="model.Special">
+              <label class="form-check-label">
+                Personalized cookie <br />
+                (Add personalized message <br />
+                in special instructions) <b>+$3</b>
+              </label>
+            </div>
+
+            <div class="row">
+              <div class="col">
+                <p class="font-weight-bold mt-2">Quantity</p>
+              </div>
+              <div class="col">
+                <button type="button" class="btn btn-outline-info btn-sm" (click)="minus()"><i class="fa fa-minus"></i></button>
+                <input type="text" name="Quantity" style="width: 33px;" [(ngModel)]="quantity">
+                <button type="button" class="btn btn-outline-info btn-sm" (click)="plus()"><i class="fa fa-plus"></i></button>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary btn-sm mt-2">ADD TO MY ORDER</button>
+          </form>
+          <hr>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

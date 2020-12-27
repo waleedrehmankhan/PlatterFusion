@@ -21,6 +21,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using PlatterFusion.API.Extensions;
 using PlatterFusion.API.Middleware;
+using PlatterFusion.API.Services.Payments;
 
 namespace PlatterFusion.API
 {
@@ -40,8 +41,9 @@ namespace PlatterFusion.API
             services.AddApplicationServices(_config);
             services.AddAutoMapper(typeof(AutoMapperProfile));
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IStripeService, StripeService>();
             services.AddCors();
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson();
             services.AddHttpContextAccessor();
             services.AddIdentityServices(_config);
             

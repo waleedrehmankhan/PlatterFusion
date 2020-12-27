@@ -1,12 +1,12 @@
 import { OrderViewComponent } from './order-view/order-view.component';
-import { OrderAddComponent } from './order-add/order-add.component';
+import { OrderMenuComponent } from './order-menu/order-menu.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { OrderOnlineComponent } from './order-online/order-online.component';
 
 const routes: Routes = [
   { path: "view", component: OrderViewComponent },
-  { path: "add", component: OrderAddComponent },
+  { path: "menu", component: OrderMenuComponent },
   { path: "online", component: OrderOnlineComponent }
 ];
 

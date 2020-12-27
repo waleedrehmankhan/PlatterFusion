@@ -1,3 +1,73 @@
+
 .offset-right {
   margin-right: 20%;
+}
+
+.center {
+  text-align: center;
+}
+
+.nounderline {
+  text-decoration: none !important
+}
+
+agm-map {
+  height: 400px;
+}
+
+h1 {
+  font-size: 36px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+h4 {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.small {
+  font-size: 85%;
+  font-weight: 400;
+  font-style: italic;
+}
+
+.container-fluid {
+  margin-top: -65px;
+}
+
+.logo img {
+  height: 37px;
+  width: 175px;
+}
+
+.form-wrapper {
+  width: 550px;
+  padding: 20px 0;
+  margin: auto;
+}
+
+.form-control {
+  height: calc(2em + 0.75rem + 2px);
+  background-color: #f4f9fd;
+  box-shadow: none;
+}
+
+.btn {
+  padding: 0.5rem;
+}
+
+.row-title {
+  -webkit-box-align: center;
+  align-items: center;
+}
+
+.position-fixed {
+  position: static !important;
+}
+
+@media screen and (max-width: 576px) {
+  .form-wrapper {
+    width: 100%;
+  }
 }

@@ -1,128 +1,411 @@
-<div class="container-fluid pt-2 mt-5 bg-secondary">
-  <div class="row">
-    <div class="col-md-3 border border-light position-fixed h-100">
-      <div class="card">
-        <div class="card-header">
+<div class="container-fluid mt-5">
+  <form class="form-horizontal" [formGroup]="registerForm" (ngSubmit)="register()" novalidate>
+    <ng-container *ngIf="!isSuccess; else successTemplate">
+      <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-3 border-left border-top border-bottom border-dark">
           <div class="row">
+            <div class="col-md-1"></div>
             <div class="col">
-              <h3 class="d-inline">
-                Fussion Menu
-              </h3>
-            </div>
-            <div class="col-auto">
-              <button tooltip="Manage Industries" class="btn btn-link text-secondary p-0"><i class="fal fa-cog"></i></button>
+              <button type="button" (click)="onPrevStep(0)" class="btn btn-sm btn-outline-info mt-4 mb-4" routerLink="/app/order/menu"> Back to Menu </button>
             </div>
           </div>
-          <ul class="list-group list-group-flush mt-2" *ngFor="let product of productArray">
-            <li class="list-group-item"><a class="btn btn-link" (click)="onProductSelect(product.Id)">{{product.Name}}</a></li>
-          </ul>
+          <div class="row">
+            <div class="col d-flex justify-content-center">
+              <div class="card" style="width: 20rem;">
+                <div class="card-body">
+                  <div class="row mt-2">
+                    <div class="col">
+                      <p class="pull-left"><b>My Order</b></p>
+                    </div>
+                    <div class="col">
+                      <p class="pull-right"><b>({{items}} items)</b></p>
+                    </div>
+                  </div>
+                  <hr />
+                  <div class="row">
+                    <div class="col">
+                      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT7gINamLofpwTHDF0eJ47e3_xvaAq_OOrJ2A&usqp=CAU" class="img-fluid" alt="Responsive image">
+                    </div>
+                  </div>
+                  <hr style="border: solid 1px" />
+                  <div class="row">
+                    <div class="col">
+                      <p class="pull-left"><b>Subtotal</b></p>
+                    </div>
+                    <div class="col">
+                      <p class="pull-right"><b>${{subtotal}}</b></p>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col">
+                      <p class="pull-left"><b>Delivery</b></p>
+                    </div>
+                    <div class="col">
+                      <p class="pull-right"><b>from ${{delivery}}</b></p>
+                    </div>
+                  </div>
+                  <hr />
+                  <div class="row">
+                    <div class="col" *ngIf="formattedaddress">
+                      <small class="form-text text-muted mb-1"><b>Address:</b></small>
+                      {{formattedaddress}}<br />
+                      <label class="mr-2" for="onArrival">Apartment: {{model.Apt}}</label>
+                      <label class="mr-2" for="onArrival">Floor: {{model.Floor}}</label>
+                      <label class="mt-0" for="onArrival">Entrance: {{model.Entrance}}</label>
+                      <small class="form-text text-muted mt-1">We'll never share your information with anyone else.</small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
+        <div class="col-md-7 border-right border-bottom border-top border-dark">
+          <aw-wizard #startupwizard class="aw-wizard-wrap">
+            <aw-wizard-step (stepEnter)="currentStep = 0" stepTitle="" [navigationSymbol]="">
+            
+            <div formGroupName="addressInfo" class="form-container"
+                   [ngClass]="{ 'step-show':currentStep === 0, 'step-hide':currentStep !== 0 }">
+                <alert *ngFor="let error of errors" class="mb-2" type="danger" [dismissible]="true">{{error}}</alert>
 
-    <div class="col-md-7 offset-md-3 border border-light position-fixed h-100">
-      <div class="row d-flex justify-content-md-around">
-        <div class="col-8 offset-right">
-
-          <form class="form-horizontal" #wizardForm="ngForm" (ngSubmit)="register()" novalidate>
-            <ng-container *ngIf="!isSuccess; else successTemplate">
-              <div class="form-wrapper">
-                <aw-wizard #startupwizard class="aw-wizard-wrap" navBarLayout="large-empty">
-
-                  <aw-wizard-step (stepEnter)="currentStep = 0" stepTitle="" [navigationSymbol]="">
-                    <!--Step 1-->
-                    <div class="form-group">
-                      <div class="card" style="width: 16rem;">
-                        <img class="card-img-top" src="{{productSelected.Image}}" alt="Card image cap">
-                        <div class="card-body">
-                          <h5 class="card-title">{{productSelected.Name}}</h5>
-                          <p class="card-text">{{productSelected.Description}} <a (click)="open(content)"><i class="fa fa-plus float-right"></i></a> </p>
+                <div class="row">
+                  <div class="col-md-5">
+                    <h4 class="text-dark font-weight-bold mt-2 mb-3">Start by adding your address</h4>
+                  </div>
+                </div>
+                <div class="card">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="row">
+                          <div class="col-md-6">
+                            <div class="input-group">
+                              <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">@</span>
+                              </div>
+                              <input ngx-google-places-autocomplete [options]='options' (onAddressChange)="addressChange($event, templateAddress)"
+                                     formControlName="deliveryAddress" type="text" name="address" class="form-control"
+                                     placeholder="Enter Delivery Address" aria-label="Username" aria-describedby="basic-addon1">
+                            </div>
+                            <div ngxErrors="addressInfo.deliveryAddress">
+                              <div ngxError="required" when="touched" class="text-danger">Delivery address is required.</div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col mt-3">
+                            <agm-map [zoom]="14" [usePanning]="true" [latitude]="latitude" [longitude]="longitude">
+                              <agm-marker [latitude]="latitude" [longitude]="longitude"></agm-marker>
+                            </agm-map>
+                          </div>
                         </div>
                       </div>
                     </div>
+                  </div>
+                </div>
+                <div class="row mt-3">
+                  <div class="col-md-2"></div>
+                  <div class="col-md-8">
                     <div class="form-group">
                       <button (click)="onNextStep(1)" class="btn btn-secondary btn-block" type="button">Save & Continue</button>
                     </div>
-                  </aw-wizard-step>
+                  </div>
+                  <div class="col-md-2"></div>
+                </div>
+              </div>
+            </aw-wizard-step>
 
-                  <aw-wizard-step (stepEnter)="currentStep = 1" stepTitle="" [navigationSymbol]="">
-                    <!--Step 2-->
-                    <div class="row mb-3">
-                      <div class="col-2"><button type="button" (click)="onPrevStep(0)" class="btn btn-link p-0"> Go Back </button></div>
-                      <div class="col-8"><h4 class="text-dark text-center font-weight-bold">Tell Us About Yourself</h4></div>
-                      <div class="col-2"></div>
-                    </div>
-                    <h3>Step 2</h3>
-                    <div class="form-group mt-3">
-                      <button (click)="onNextStep(2)" class="btn btn-secondary btn-block" type="button">Save & Continue</button>
-                    </div>
-                  </aw-wizard-step>
+            <aw-wizard-step (stepEnter)="currentStep = 1" stepTitle="" [navigationSymbol]="">
+              <div formGroupName="contactInfo" class="form-container"
+                   [ngClass]="{ 'step-show':currentStep === 1, 'step-hide':currentStep !== 1 }">
 
-                  <aw-wizard-step (stepEnter)="currentStep = 2" stepTitle="" [navigationSymbol]="">
+                <div class="row">
+                  <div class="col-md-12">
                     <div class="row mb-3">
                       <div class="col-2"><button type="button" (click)="onPrevStep(1)" class="btn btn-link p-0"> Go Back </button></div>
-                      <div class="col-8"><h4 class="text-dark text-center font-weight-bold">Choose product</h4></div>
+                      <div class="col-8"><h4 class="text-dark text-center font-weight-bold">Contact Information</h4></div>
                       <div class="col-2"></div>
                     </div>
-                    <!--Step 3-->
-                    <h3>Step 3</h3>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-5">
+                    <h4 class="text-dark font-weight-bold mt-2 mb-3">Let's add your contact details</h4>
+                  </div>
+                </div>
+                <div class="card" style="height:360px;">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="form-row">
+                          <div class="form-group col-md-6">
+                            <label for="firstName">First Name*</label>
+                            <input type="text" class="form-control" formControlName="firstName" placeholder="Your first name*" />
+                            <div ngxErrors="contactInfo.firstName">
+                              <div ngxError="required" when="touched" class="text-danger">First name is required.</div>
+                              <div ngxError="minlength" when="dirty" class="text-danger">Minimum length should be 2 characters.</div>
+                              <div ngxError="maxlength" when="dirty" class="text-danger">Max length should not exceed 60 characters.</div>
+                              <div ngxError="pattern" when="dirty" class="text-danger">Only alphanumeric characters are allowed.</div>
+                            </div>
+                          </div>
+                          <div class="form-group col-md-6">
+                            <label for="lastName">Last Name*</label>
+                            <input type="text" class="form-control" formControlName="lastName" placeholder="Your last name*" />
+                            <div ngxErrors="contactInfo.lastName">
+                              <div ngxError="required" when="touched" class="text-danger">Last name is required.</div>
+                              <div ngxError="minlength" when="dirty" class="text-danger">Minimum length should be 2 characters.</div>
+                              <div ngxError="maxlength" when="dirty" class="text-danger">Max length should not exceed 60 characters.</div>
+                              <div ngxError="pattern" when="dirty" class="text-danger">Only alphanumeric characters are allowed.</div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-row">
+                          <div class="form-group col-md-6">
+                            <label for="cellphone">Cell Phone*</label>
+                            <input type="text" class="form-control input-lg"
+                                   mask="000-000-0000" [dropSpecialCharacters]="false"
+                                   formControlName="phoneNumber" id="phoneNumber" />
+                            <div ngxErrors="contactInfo.phoneNumber">
+                              <div ngxError="required" when="touched" class="text-danger">Phone number is required.</div>
+                              <div ngxError="minlength" when="dirty" class="text-danger">eg 111-222-3333</div>
+                              <div ngxErrorRemote class="text-danger"></div>
+                            </div>
+                          </div>
+                          <div class="form-group col-md-6">
+                            <label for="email">Email Address*</label>
+                            <input type="text" class="form-control"
+                                   formControlName="email" id="email" placeholder="Your e-mail*" />
+                            <small class="form-text text-muted mt-1">We'll send an order confirmation to this email</small>
+                            <div ngxErrors="contactInfo.email">
+                              <div ngxError="required" when="touched" class="text-danger">Email is required.</div>
+                              <div ngxError="email" when="dirty" class="text-danger">Email is invalid.</div>
+                              <div ngxError="pattern" when="dirty" class="text-danger">Email must be valid.</div>
+                              <div ngxErrorRemote class="text-danger"></div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row mt-3">
+                  <div class="col-md-2"></div>
+                  <div class="col-md-8">
+                    <div class="form-group mt-3">
+                      <button type="button" (click)="onNextStep(2)" class="btn btn-secondary btn-block">Save & Continue</button>
+                    </div>
+                  </div>
+                  <div class="col-md-2"></div>
+                </div>
+                </div>
+            </aw-wizard-step>
+            <aw-wizard-step (stepEnter)="currentStep = 2" stepTitle="" [navigationSymbol]="">
+
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="row mb-3">
+                    <div class="col-2"><button type="button" (click)="onPrevStep(1)" class="btn btn-link p-0"> Go Back </button></div>
+                    <div class="col-8"><h4 class="text-dark text-center font-weight-bold">Payment Information</h4></div>
+                    <div class="col-2"></div>
+                  </div>
+                </div>
+              </div>
+                  <div class="row">
+                    <div class="col-md-5">
+                      <h4 class="text-dark font-weight-bold mt-2 mb-3">How do you want to pay?</h4>
+                    </div>
+                  </div>
+                  <div class="card" style="height:360px;">
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-md-12">
+                          <ng-template [ngIf]="!hasPaymentInfo">
+                            <p>Click below button to add your card info</p>
+                            <button class="btn btn-warning btn-sm" (click)="hasPaymentInfo = !hasPaymentInfo;">Add Credit Card</button>
+                          </ng-template>
+                          <ng-template [ngIf]="hasPaymentInfo">
+                            <div formGroupName="cardInfo" class="form-container"
+                                 [ngClass]="{ 'step-show':currentStep === 0, 'step-hide':currentStep !== 0 }">
+                              <div class="form-row">
+                                <div class="form-group col-md-6">
+                                  <label>Card Holder Name</label>
+                                  <input type="text" formControlName="cardholderName" class="form-control" placeholder="Name on card" />
+                                  <div ngxErrors="cardInfo.cardholderName">
+                                    <div ngxError="required" when="touched" class="text-danger">Card name is required</div>
+                                    <div ngxErrorRemote class="text-danger"></div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="form-row">
+                                <div class="form-group col-md-6">
+                                  <label>Card Information</label>
+                                  <ngx-stripe-card class="form-control" [options]="cardOptions" [elementsOptions]="elementsOptions"></ngx-stripe-card>
+
+                                  <ul id="card-errors" role="alert" class="text-danger p-0">
+                                    <li *ngFor="let error of errors">{{error}}</li>
+                                  </ul>
+                                </div>
+                              </div>
+                              <button (click)="hasPaymentInfo = !hasPaymentInfo;" type="button" class="btn btn-sm btn-outline-info">Cancel</button>
+                            </div>
+                          </ng-template>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                <div class="row mt-3">
+                  <div class="col-md-2"></div>
+                  <div class="col-md-8">
                     <div class="form-group mt-3">
                       <button (click)="onNextStep(3)" class="btn btn-secondary btn-block" type="button">Save & Continue</button>
                     </div>
-                  </aw-wizard-step>
-
-                  <aw-wizard-step stepTitle="" [navigationSymbol]="">
-                    <!--Step 4-->
-                    <div class="row mb-3">
-                      <div class="col-2"><button type="button" (click)="onPrevStep(2)" class="btn btn-link p-0"> Go Back </button></div>
-                      <div class="col-8"><h4 class="text-dark text-center font-weight-bold">Card pay</h4></div>
-                      <div class="col-2"></div>
-                    </div>
-                    <h3>Step 4</h3>
-                    <div class="form-group mt-3">
-                      <button class="btn btn-secondary btn-block" [promiseBtn]="isLoading" type="submit">Try it For Free</button>
-                    </div>
-                  </aw-wizard-step>
-                </aw-wizard>
-              </div>
-            </ng-container>
-            <ng-template #successTemplate>
-              <div class="container vertical-center">
-                <div class="jumbotron bg-white text-center mx-auto">
-                  <div class="icon-wrap-lg d-table p-1 bg-light rounded-circle mx-auto">
-                    <span class="d-table-cell align-middle"><img src="/" width="100" height="70" /></span>
                   </div>
-                  <h3 class="mt-2">Welcome To Platter Fusion</h3>
-                  <h6 class="text-primary">We're Excited To Have You On Board!</h6>
-                  <p class="mt-2" style="font-size: 0.875rem;">Your order has been placed, <br /> click on the <a href="">link</a> to track your order.</p>
-                  <a [routerLink]="['/login']" class="btn btn-secondary">Your Account</a>
+                  <div class="col-md-2"></div>
+                </div>
+            </aw-wizard-step>
+
+            <aw-wizard-step stepTitle="" [navigationSymbol]="">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="row mb-3">
+                    <div class="col-2"><button type="button" (click)="onPrevStep(1)" class="btn btn-link p-0"> Go Back </button></div>
+                    <div class="col-8"><h4 class="text-dark text-center font-weight-bold">Confirmation</h4></div>
+                    <div class="col-2"></div>
+                  </div>
                 </div>
               </div>
-            </ng-template>
-          </form>
+              <div class="row">
+                <div class="col-md-5">
+                  <h4 class="text-dark font-weight-bold mt-2 mb-3">Order Confirmation</h4>
+                </div>
+              </div>
+              <div class="card" style="height:360px;">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <h4><i class="fa fa-2x fa-user-circle mr-2"></i> Asfand Ali</h4>
+                      
+                      <h6 class="mt-4"><i class="fa fa-phone mr-1"></i> (02)23025312. </h6>
+                      <h6><i class="fa fa-map-marker mr-1"></i> Address. </h6>
+                      <h6><i class="fa fa-hourglass-half mr-1"></i> At approx. </h6>
+                      <h6><i class="fa fa-envelope mr-1"></i> Email. </h6>
+                      <hr />
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6 text-left">
+                      <h4>Paying with: </h4>
+                      <h6><i class="fa fa-credit-card mt-1 mr-2"></i> Visa **** 4242</h6>
+                    </div>
+                    <div class="col-md-6 text-right">
+                      <div class="row mt-3"></div>
+                      <h4>$85</h4>
+                    </div>
+                  </div>
+                </div>
+                  </div>
+                  <div class="row mt-3">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-8">
+                      <div class="form-group mt-3">
+                        <button class="btn btn-secondary btn-block" [promiseBtn]="isLoading" type="submit">Check-out (Try it)</button>
+                      </div>
+                    </div>
+                    <div class="col-md-2"></div>
+                  </div>
+
+
+</aw-wizard-step>
+
+
+          </aw-wizard>
+          <div class="col-md-1"></div>
+        </div>
+        <div class="mt-5"></div>
+      </div>
+    </ng-container>
+  </form>
+  <ng-template #successTemplate>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="container vertical-center">
+          <div class="jumbotron bg-white text-center mx-auto">
+            <div class="icon-wrap-lg d-table p-1 bg-light rounded-circle mx-auto">
+              <span class="d-table-cell align-middle"><img src="/" width="100" height="70" /></span>
+            </div>
+            <h3 class="mt-2">Welcome To Platter Fusion</h3>
+            <h6 class="text-primary">We're Excited To Have You On Board!</h6>
+            <p class="mt-2" style="font-size: 0.875rem;">Your order has been placed, <br /> click on the <a href="">link</a> to track your order.</p>
+            <a [routerLink]="['/login']" class="btn btn-secondary">Your Account</a>
+          </div>
         </div>
       </div>
     </div>
-    <div class="col-md-2 offset-md-10 border border-light position-fixed h-100"></div>
-  </div>
+  </ng-template>
 </div>
-<ng-template #content let-modal>
-    <div class="modal-header">
-      <h4 class="modal-title">
-        Geeks of Geeks
-      </h4>
-      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-        <span aria-hidden="true"> × </span>
-      </button>
+<div class="mt-5"></div>
+
+<ng-template #templateAddress>
+  <div class="modal-body">
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <p class="font-weight-bold pull-left">Address Details</p>
+        </div>
+        <div class="col">
+          <a (click)="modalRef.hide()"><i class="fa fa-times float-right"></i></a>
+        </div>
+      </div>
+      <div class="row">
+        <form #addressDetailForm="ngForm" (ngSubmit)="addToMyAddress(addressDetailForm)" novalidate>
+          <div class="row mt-2">
+            <div class="col">
+              <div class="form-group">
+                <input type="text" name="apartment" class="form-control" placeholder="Apt." [(ngModel)]="model.Apt" required>
+              </div>
+            </div>
+            <div class="col">
+              <div class="form-group">
+                <input type="text" name="floor" class="form-control" placeholder="Floor" [(ngModel)]="model.Floor" required>
+              </div>
+            </div>
+            <div class="col">
+              <div class="form-group">
+                <input type="text" name="entrance" class="form-control" placeholder="Entrance" [(ngModel)]="model.Entrance" required>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="!isAddressDetailSubmitted && addressDetailForm.invalid">
+            <p style="color:red">Please enter address detail.</p>
+          </div>
+          <div class="row">
+            <div class="col">
+              <div class="form-group">
+                <label for="textarea">Add delivery instructions</label>
+                <textarea class="form-control" name="deliveryIns" id="textarea" rows="2" [(ngModel)]="model.DeliveryIns"></textarea>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <div class="form-group">
+                <label class="mr-2" for="onArrival">On Arrival:</label>
+                <button type="button" class="btn btn-sm btn-outline-info mr-2" ng-click="isBuzzDoor = true">Buzz Door</button>
+                <button type="button" class="btn btn-sm btn-outline-info" ng-click="isCallMe = true">Call Me</button>
+              </div>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary btn-sm mt-2">ADD TO MY ADDRESS</button>
+        </form>
+      </div>
     </div>
-    <div class="modal-body">
-      Hi
-    </div>
-    <div class="modal-footer">
-      <button type="button"
-              class="btn btn-outline-dark"
-              (click)="modal.close('Save click')">
-        Save
-      </button>
-    </div>
+  </div>
 </ng-template>
+
+
+
+
+
+
