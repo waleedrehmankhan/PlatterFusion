@@ -17,3 +17,10 @@ export class PaymentCreateBindingModel {
   cardholderName: string;
   stripeToken: string;
 }
+
+export class orderDetailModel {
+  orders: Array<any>;
+  subtotal: number;
+  delivery: number;
+  time: string;
+}

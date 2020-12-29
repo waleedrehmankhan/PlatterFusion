@@ -25,7 +25,29 @@
                   <hr />
                   <div class="row">
                     <div class="col">
-                      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT7gINamLofpwTHDF0eJ47e3_xvaAq_OOrJ2A&usqp=CAU" class="img-fluid" alt="Responsive image">
+                      <div id="main_list" class="col-md-12">
+                        <img *ngIf="isSubmitted" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT7gINamLofpwTHDF0eJ47e3_xvaAq_OOrJ2A&usqp=CAU" class="img-fluid" alt="Responsive image">
+                        <ul *ngIf="!isSubmitted" class="list-group list-group-flush">
+                          <li *ngFor="let order of orders; let index = index" class="list-group-item">
+                            <div class="row listCenter">
+                              <div class="col">
+                                <div class="row">
+                                  <div class="col-9">
+                                    <strong>{{order.quantity}}x {{order.name}}</strong>
+                                  </div>
+                                  <div class="col-3"><b>{{order.price}}</b></div>
+                                </div>
+                                <div class="row">
+                                  <div class="col">
+                                    <div *ngIf="order.size"><b>Size: {{order.size}}</b></div>
+                                    <div *ngIf="order.personalized"><b> Personalized-Cookie (Add personalized message in special requests) +$3</b></div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
                     </div>
                   </div>
                   <hr style="border: solid 1px" />
@@ -50,9 +72,9 @@
                     <div class="col" *ngIf="formattedaddress">
                       <small class="form-text text-muted mb-1"><b>Address:</b></small>
                       {{formattedaddress}}<br />
-                      <label class="mr-2" for="onArrival">Apartment: {{model.Apt}}</label>
-                      <label class="mr-2" for="onArrival">Floor: {{model.Floor}}</label>
-                      <label class="mt-0" for="onArrival">Entrance: {{model.Entrance}}</label>
+                      <label class="mr-2" for="onArrival">Apartment: {{addressDetailModel.Apt}}</label>
+                      <label class="mr-2" for="onArrival">Floor: {{addressDetailModel.Floor}}</label>
+                      <label class="mt-0" for="onArrival">Entrance: {{addressDetailModel.Entrance}}</label>
                       <small class="form-text text-muted mt-1">We'll never share your information with anyone else.</small>
                     </div>
                   </div>
@@ -285,12 +307,17 @@
                 <div class="card-body">
                   <div class="row">
                     <div class="col-md-12">
-                      <h4><i class="fa fa-2x fa-user-circle mr-2"></i> Asfand Ali</h4>
+                      <h4><i class="fa fa-2x fa-user-circle mr-2"></i> {{model.firstName}} {{model.lastName}}</h4>
                       
-                      <h6 class="mt-4"><i class="fa fa-phone mr-1"></i> (02)23025312. </h6>
-                      <h6><i class="fa fa-map-marker mr-1"></i> Address. </h6>
-                      <h6><i class="fa fa-hourglass-half mr-1"></i> At approx. </h6>
-                      <h6><i class="fa fa-envelope mr-1"></i> Email. </h6>
+                      <h6 class="mt-4"><i class="fa fa-phone mr-1"></i> {{model.phoneNumber}} </h6>
+                      <h6>
+                        <i class="fa fa-map-marker mr-1"></i> {{formattedaddress}}<br />
+                      <label class="mr-2" for="onArrival">Apartment: {{addressDetailModel.Apt}}</label>
+                      <label class="mr-2" for="onArrival">Floor: {{addressDetailModel.Floor}}</label>
+                      <label class="mt-0" for="onArrival">Entrance: {{addressDetailModel.Entrance}}</label>
+                      </h6>
+                      <h6><i class="fa fa-hourglass-half mr-1"></i> At approx: {{orderTime}} </h6>
+                      <h6><i class="fa fa-envelope mr-1"></i> {{model.email}} </h6>
                       <hr />
                     </div>
                   </div>
@@ -363,17 +390,17 @@
           <div class="row mt-2">
             <div class="col">
               <div class="form-group">
-                <input type="text" name="apartment" class="form-control" placeholder="Apt." [(ngModel)]="model.Apt" required>
+                <input type="text" name="apartment" class="form-control" placeholder="Apt." [(ngModel)]="addressDetailModel.Apt" required>
               </div>
             </div>
             <div class="col">
               <div class="form-group">
-                <input type="text" name="floor" class="form-control" placeholder="Floor" [(ngModel)]="model.Floor" required>
+                <input type="text" name="floor" class="form-control" placeholder="Floor" [(ngModel)]="addressDetailModel.Floor" required>
               </div>
             </div>
             <div class="col">
               <div class="form-group">
-                <input type="text" name="entrance" class="form-control" placeholder="Entrance" [(ngModel)]="model.Entrance" required>
+                <input type="text" name="entrance" class="form-control" placeholder="Entrance" [(ngModel)]="addressDetailModel.Entrance" required>
               </div>
             </div>
           </div>
@@ -384,7 +411,7 @@
             <div class="col">
               <div class="form-group">
                 <label for="textarea">Add delivery instructions</label>
-                <textarea class="form-control" name="deliveryIns" id="textarea" rows="2" [(ngModel)]="model.DeliveryIns"></textarea>
+                <textarea class="form-control" name="deliveryIns" id="textarea" rows="2" [(ngModel)]="addressDetailModel.DeliveryIns"></textarea>
               </div>
             </div>
           </div>

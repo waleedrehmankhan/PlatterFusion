@@ -43,7 +43,7 @@
                     </div>
                   </div>
                   <div class="form-group mt-5">
-                    <button type="submit" class="btn btn-secondary btn-block" >Save & Continue</button>
+                    <button type="submit" class="btn btn-secondary btn-block">Save & Continue</button>
                   </div>
                 </div>
               </div>
@@ -62,8 +62,31 @@
                     </div>
                     <hr />
                     <div class="row">
-                      <div class="col">
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT7gINamLofpwTHDF0eJ47e3_xvaAq_OOrJ2A&usqp=CAU" class="img-fluid" alt="Responsive image">
+                      <div id="main_list" class="col-md-12">
+                        <img *ngIf="isSubmitted" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT7gINamLofpwTHDF0eJ47e3_xvaAq_OOrJ2A&usqp=CAU" class="img-fluid" alt="Responsive image">
+                        <ul *ngIf="!isSubmitted" class="list-group list-group-flush">
+                          <li *ngFor="let order of orders; let index = index" class="list-group-item list-group-item-action">
+                            <div class="row listCenter">
+                              <div class="col-10">
+                                <div class="row">
+                                  <div class="col-9">
+                                    <strong>{{order.quantity}}x {{order.name}}</strong>
+                                  </div>
+                                  <div class="col-3"><b>{{order.price}}</b></div>
+                                </div>
+                                <div class="row">
+                                  <div class="col">
+                                    <div *ngIf="order.size"><b>Size: {{order.size}}</b></div>
+                                    <div *ngIf="order.personalized"><b> Personalized-Cookie (Add personalized message in special requests) +$3</b></div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-2">
+                                <a (click)="listItemRemove(index)"><i class="hide fa fa-minus float-right mt-2"></i></a>
+                              </div>
+                            </div>
+                          </li>
+                        </ul>
                       </div>
                     </div>
                     <hr style="border: solid 1px" />
@@ -153,15 +176,15 @@
             <p><b>Size</b><br />Choose one</p>
             <hr />
             <div class="form-group form-check form-check-inline">
-              <input class="form-check-input" type="radio" name="radio" value="small" [(ngModel)]="model.Size" required>
+              <input class="form-check-input" type="radio" name="radio" value="Small(Feeds 1-2)" [(ngModel)]="model.Size" required>
               <label class="form-check-label"> Small(Feeds 1-2) </label>
             </div>
             <div class="form-group form-check form-check-inline">
-              <input class="form-check-input" type="radio" name="radio" value="medium" [(ngModel)]="model.Size" required>
+              <input class="form-check-input" type="radio" name="radio" value="Medium(Feeds 4-6) +$20" [(ngModel)]="model.Size" required>
               <label class="form-check-label"> Medium(Feeds 4-6)<b> +$20</b></label>
             </div>
             <div class="form-group form-check">
-              <input class="form-check-input" type="radio" name="radio" value="large" [(ngModel)]="model.Size" required>
+              <input class="form-check-input" type="radio" name="radio" value="Large(Feeds 6-10) +$40" [(ngModel)]="model.Size" required>
               <label class="form-check-label"> Large(Feeds 6-10)<b> +$40</b></label>
             </div>
             <div *ngIf="!isSubmitted && productDetailForm.invalid">

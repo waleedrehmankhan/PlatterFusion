@@ -3,13 +3,15 @@ import { FormBuilder, FormControl, FormGroup, NgForm, Validators } from '@angula
 import { WizardComponent } from 'angular-archwizard';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { OrderService } from '../../_services/order.service';
-import { CreditCardInfoBindingModel, PaymentCreateBindingModel } from '../../_models/orderDto';
+import { CreditCardInfoBindingModel, orderDetailModel, PaymentCreateBindingModel } from '../../_models/orderDto';
 import { StripeService, StripeCardComponent} from 'ngx-stripe';
 import { badRequestErrorHandler, validateAllFormFields } from 'shared/common/form-helpers';
 import {
   StripeCardElementOptions,
   StripeElementsOptions
 } from '@stripe/stripe-js';
+import { Subscription } from 'rxjs';
+import { first } from 'rxjs/operators';
 
 const EmailRegex = new RegExp('^[a-zA-Z0-9_\\.-]+@([a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$');
 const NameRegex = new RegExp('[a-zA-Z]');
@@ -24,24 +26,29 @@ export class OrderOnlineComponent implements OnInit {
   errors: string[] = [];
   model: any = {};
   payModel: PaymentCreateBindingModel = new PaymentCreateBindingModel();
-
+  order: orderDetailModel = new orderDetailModel();
+  orders: Array<any>;
+  addressDetailModel: any = {};
   validationErrors: string[] = [];
   sizes = ['Small(Feeds 1-2)', 'Medium(Feeds 4-6)', 'Large(Feeds 6 - 10)'];
   formattedaddress = "";
   latitude: number;
   longitude: number;
-  
   datepickerModel: any;
   isSuccess: boolean = false;
   isLoading: any;
+  subtotal: number = 0;
+  delivery: number = 0;
+  orderTime: string;
   closeResult = '';
   modalRef: BsModalRef;
   isAddressAdded = false;
-  isSubmitted = true;
   isAddressDetailSubmitted = true;
   isAddressSubmitted: boolean = false;
+  isSubmitted: boolean = true;
   hasPaymentInfo: boolean;
   registerForm: FormGroup;
+  subscription: Subscription;
 
   //card
   cardInfo: CreditCardInfoBindingModel = new CreditCardInfoBindingModel();
@@ -86,6 +93,16 @@ export class OrderOnlineComponent implements OnInit {
 
   ngOnInit() {
     this.setupForm();
+    this.subscription = this.orderService.currentMessage.pipe(first()).subscribe((orders: any) => {
+      if (orders != null) {
+        this.isSubmitted = false;
+         this.order = orders;
+         this.orders = this.order.orders;
+         this.subtotal = this.order.subtotal;
+        this.delivery = this.order.delivery;
+        this.orderTime = this.order.time;
+      }
+    });
   }
 
   setupForm(): void {
@@ -110,8 +127,6 @@ export class OrderOnlineComponent implements OnInit {
     if (!addressDetailform.valid) {
       return false;
     } else {
-      debugger;
-      this.model;
       this.modalRef.hide();
     }
   }
@@ -155,6 +170,7 @@ export class OrderOnlineComponent implements OnInit {
         case 2: {
           var contactInfoGroup = this.registerForm.get('contactInfo') as FormGroup;
           if (contactInfoGroup.valid) {
+            this.model = contactInfoGroup.value;
             this.wizard.goToNextStep();
           } else {
             validateAllFormFields(contactInfoGroup);
@@ -195,5 +211,10 @@ export class OrderOnlineComponent implements OnInit {
 
   onPrevStep(index: number) {
     this.wizard.goToPreviousStep();
+  }
+
+  ngOnDestroy() {
+    // prevent memory leak when component destroyed
+    this.subscription.unsubscribe();
   }
 }
